@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const highlights = [
   {
@@ -15,114 +18,474 @@ const highlights = [
     desc: "A five-day intensive program bridging the gap to corporate life through technical mock interviews, group discussions, and career preparation.",
     href: "/events",
   },
+  {
+    tag: "COMPETITION",
+    date: "21 MAY 2026",
+    title: "Code Bites 5.0",
+    desc: "Our signature coding challenge bringing together dozens of students to test their problem-solving, logical thinking, and programming skills.",
+    href: "/events",
+  },
+  {
+    tag: "WORKSHOP",
+    date: "29 SEP 2024",
+    title: "Roadmap to Programming",
+    desc: "An engaging interactive workshop providing first-year students with foundational C programming concepts and a clear vision for their coding journey.",
+    href: "/events",
+  },
+  {
+    tag: "QUIZ COMPETITION",
+    date: "18 SEP 2024",
+    title: "Quiz-O-Mania",
+    desc: "A thrilling three-round technical quiz competition bringing together over 35 teams across departments to showcase their technical knowledge.",
+    href: "/events",
+  },
 ];
 
+function ChevronIcon({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-5 w-5"
+      aria-hidden="true"
+    >
+      {direction === "left" ? (
+        <path d="m15 18-6-6 6-6" />
+      ) : (
+        <path d="m9 18 6-6-6-6" />
+      )}
+    </svg>
+  );
+}
+
 export default function Highlights() {
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const updateScrollState = useCallback(() => {
+    const carousel = carouselRef.current;
+
+    if (!carousel) return;
+
+    const maxScroll =
+      carousel.scrollWidth - carousel.clientWidth;
+
+    const currentScroll = carousel.scrollLeft;
+
+    setCanScrollLeft(currentScroll > 5);
+    setCanScrollRight(currentScroll < maxScroll - 5);
+
+    // Determine which card is currently closest to the left edge
+    const cards = Array.from(
+      carousel.children
+    ) as HTMLElement[];
+
+    if (!cards.length) return;
+
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    cards.forEach((card, index) => {
+      const distance = Math.abs(
+        card.offsetLeft - currentScroll
+      );
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    setActiveIndex(closestIndex);
+  }, []);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+
+    if (!carousel) return;
+
+    updateScrollState();
+
+    carousel.addEventListener("scroll", updateScrollState, {
+      passive: true,
+    });
+
+    window.addEventListener("resize", updateScrollState);
+
+    return () => {
+      carousel.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, [updateScrollState]);
+
+  const scroll = (direction: "left" | "right") => {
+    const carousel = carouselRef.current;
+
+    if (!carousel) return;
+
+    const firstCard = carousel.children[0] as HTMLElement;
+
+    if (!firstCard) return;
+
+    const gap = 24;
+
+    const amount = firstCard.offsetWidth + gap;
+
+    carousel.scrollBy({
+      left: direction === "right" ? amount : -amount,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollToCard = (index: number) => {
+    const carousel = carouselRef.current;
+    const card = carousel?.children[index] as HTMLElement;
+
+    if (!carousel || !card) return;
+
+    carousel.scrollTo({
+      left: card.offsetLeft,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section
       id="highlights"
-      className="relative z-10 min-h-[100svh] w-full flex items-center justify-center px-5 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-0 bg-transparent border-t border-white/[0.03]"
+      className="relative z-10 min-h-0 lg:min-h-[100svh] w-full flex items-center justify-center px-5 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-0 bg-transparent border-t border-white/[0.03]"
     >
       <div className="w-full max-w-7xl mx-auto">
 
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 sm:mb-12 lg:mb-14 gap-5">
-
+        <div className="flex items-end justify-between mb-8 sm:mb-10 lg:mb-12">
           <div>
-            <p className="mb-2 text-[11px] sm:text-xs font-medium uppercase tracking-[3px] sm:tracking-[2px] text-[#9AA9D6]">
+            <p className="mb-2 text-[10px] sm:text-xs font-medium uppercase tracking-[3px] text-[#9AA9D6]">
               SPOTLIGHT
             </p>
 
             <h2 className="text-[32px] sm:text-[40px] lg:text-[48px] font-medium leading-[1.05] tracking-[-1px] text-[#E8EEFF]">
-              Featured
-              <span className="text-[#6FA8FF]"> Events</span>
+              Featured{" "}
+              <span className="text-[#6FA8FF]">Events</span>
             </h2>
           </div>
 
           <Link
             href="/events"
-            className="text-[13px] sm:text-sm font-medium text-[#8F9CC2] hover:text-[#E8EEFF] transition-colors"
+            className="hidden sm:block text-[13px] sm:text-sm font-medium text-[#8F9CC2] hover:text-[#E8EEFF] transition-colors"
           >
             View all events →
           </Link>
         </div>
 
-        {/* Highlight Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-8">
+        {/* Carousel */}
+        <div className="relative">
 
-          {highlights.map((item, idx) => (
-            <article
-              key={idx}
-              className="group relative flex flex-col overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.015] backdrop-blur-sm transition-all duration-300 hover:border-[#6FA8FF]/30 hover:bg-white/[0.025]"
+          {/* LEFT ARROW */}
+          {canScrollLeft && (
+            <button
+              type="button"
+              onClick={() => scroll("left")}
+              aria-label="Previous events"
+              className="
+                absolute left-2 sm:left-3 lg:left-[-20px]
+                top-1/2 -translate-y-1/2
+                z-20
+                flex h-10 w-10 sm:h-11 sm:w-11
+                items-center justify-center
+                rounded-full
+                border border-white/[0.10]
+                bg-[#080D24]/90
+                text-[#C9D8FF]
+                shadow-xl
+                backdrop-blur-md
+                transition-all duration-200
+                hover:border-[#6FA8FF]/50
+                hover:bg-[#101936]
+                hover:text-white
+                active:scale-95
+              "
             >
+              <ChevronIcon direction="left" />
+            </button>
+          )}
 
-              {/* Visual Area */}
-              <div className="relative h-40 sm:h-48 lg:h-56 overflow-hidden border-b border-white/[0.04]">
+          {/* RIGHT ARROW */}
+          {canScrollRight && (
+            <button
+              type="button"
+              onClick={() => scroll("right")}
+              aria-label="Next events"
+              className="
+                absolute right-2 sm:right-3 lg:right-[-20px]
+                top-1/2 -translate-y-1/2
+                z-20
+                flex h-10 w-10 sm:h-11 sm:w-11
+                items-center justify-center
+                rounded-full
+                border border-white/[0.10]
+                bg-[#080D24]/90
+                text-[#C9D8FF]
+                shadow-xl
+                backdrop-blur-md
+                transition-all duration-200
+                hover:border-[#6FA8FF]/50
+                hover:bg-[#101936]
+                hover:text-white
+                active:scale-95
+              "
+            >
+              <ChevronIcon direction="right" />
+            </button>
+          )}
 
-                {/* Grid */}
-                <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:16px_16px]" />
+          {/* RIGHT EDGE FADE */}
+          {canScrollRight && (
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-12 sm:w-20 bg-gradient-to-l from-[#050817] to-transparent" />
+          )}
 
-                {/* Large Event Number */}
-                <div className="absolute bottom-3 left-5 sm:bottom-5 sm:left-6 text-[64px] sm:text-[80px] lg:text-[96px] font-medium leading-none tracking-[-5px] text-white/[0.035] select-none">
-                  {String(idx + 1).padStart(2, "0")}
-                </div>
+          {/* LEFT EDGE FADE */}
+          {canScrollLeft && (
+            <div className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-12 sm:w-20 bg-gradient-to-r from-[#050817] to-transparent" />
+          )}
 
-                {/* Corner Label */}
-                <div className="absolute right-5 top-5 sm:right-6 sm:top-6">
-                  <span className="text-[9px] sm:text-[10px] font-mono tracking-[2px] text-[#6F7DA8]">
-                    CES / {String(idx + 1).padStart(2, "0")}
-                  </span>
-                </div>
+          {/* Cards */}
+          <div
+            ref={carouselRef}
+            className="
+              flex gap-4 sm:gap-6
+              overflow-x-auto
+              snap-x snap-mandatory
+              pb-2
+              pr-8
+              overscroll-x-contain
+              [scrollbar-width:none]
+              [-ms-overflow-style:none]
+              [&::-webkit-scrollbar]:hidden
+            "
+          >
+            {highlights.map((item, idx) => (
+              <article
+                key={idx}
+                className="
+                  group
+                  relative
+                  flex
+                  shrink-0
+                  snap-start
+                  flex-col
+                  overflow-hidden
+                  rounded-xl
+                  border border-white/[0.06]
+                  bg-white/[0.015]
+                  backdrop-blur-sm
+                  transition-all duration-300
+                  hover:border-[#6FA8FF]/30
+                  hover:bg-white/[0.025]
 
-              </div>
+                  w-[calc(100vw-40px)]
+                  sm:w-[480px]
+                  lg:w-[520px]
+                  xl:w-[540px]
+                "
+              >
 
-              {/* Content */}
-              <div className="flex flex-grow flex-col justify-between p-5 sm:p-6 lg:p-7">
+                {/* Visual Area */}
+                <div
+                  className="
+                    relative
+                    h-32
+                    sm:h-44
+                    lg:h-48
+                    overflow-hidden
+                    border-b border-white/[0.04]
+                  "
+                >
+                  {/* Grid */}
+                  <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:16px_16px]" />
 
-                <div>
-
-                  {/* Meta */}
-                  <div className="flex flex-wrap items-center justify-between gap-2 text-[9px] sm:text-[10px] font-mono font-medium tracking-[1.5px]">
-
-                    <span className="text-[#6FA8FF]">
-                      {item.tag}
-                    </span>
-
-                    <span className="text-[#6F7DA8]">
-                      {item.date}
-                    </span>
-
+                  {/* Large Number */}
+                  <div
+                    className="
+                      absolute
+                      bottom-1
+                      left-4
+                      sm:bottom-3
+                      sm:left-6
+                      text-[60px]
+                      sm:text-[80px]
+                      lg:text-[88px]
+                      font-medium
+                      leading-none
+                      tracking-[-5px]
+                      text-white/[0.035]
+                      select-none
+                    "
+                  >
+                    {String(idx + 1).padStart(2, "0")}
                   </div>
 
-                  {/* Title */}
-                  <h3 className="mt-4 text-[23px] sm:text-[26px] lg:text-[30px] font-medium leading-tight tracking-[-0.5px] text-[#E8EEFF] group-hover:text-[#C9D8FF] transition-colors">
-                    {item.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="mt-3 max-w-xl text-[13px] sm:text-sm leading-[1.7] text-[#8F9CC2]">
-                    {item.desc}
-                  </p>
-
+                  {/* Corner Label */}
+                  <div className="absolute right-4 top-4 sm:right-6 sm:top-6">
+                    <span className="text-[9px] sm:text-[10px] font-mono tracking-[2px] text-[#6F7DA8]">
+                      CES / {String(idx + 1).padStart(2, "0")}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Link */}
-                <Link
-                  href={item.href}
-                  className="mt-7 inline-flex items-center text-[13px] sm:text-sm font-medium text-[#9AA9D6] hover:text-[#E8EEFF] transition-colors"
-                >
-                  View event
-                  <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </Link>
+                {/* Content */}
+                <div className="flex flex-grow flex-col justify-between p-4 sm:p-6 lg:p-7">
+
+                  <div>
+                    {/* Meta */}
+                    <div className="flex items-center justify-between gap-2 text-[9px] sm:text-[10px] font-mono font-medium tracking-[1.5px]">
+                      <span className="text-[#6FA8FF]">
+                        {item.tag}
+                      </span>
+
+                      <span className="text-[#6F7DA8]">
+                        {item.date}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3
+                      className="
+                        mt-3
+                        sm:mt-4
+                        text-[22px]
+                        sm:text-[26px]
+                        lg:text-[29px]
+                        font-medium
+                        leading-tight
+                        tracking-[-0.5px]
+                        text-[#E8EEFF]
+                        group-hover:text-[#C9D8FF]
+                        transition-colors
+                      "
+                    >
+                      {item.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p
+                      className="
+                        mt-2
+                        sm:mt-3
+                        max-w-xl
+                        text-[12px]
+                        sm:text-sm
+                        leading-[1.65]
+                        text-[#8F9CC2]
+                        line-clamp-3
+                      "
+                    >
+                      {item.desc}
+                    </p>
+                  </div>
+
+                  {/* Link */}
+                  <Link
+                    href={item.href}
+                    className="
+                      mt-5
+                      sm:mt-7
+                      inline-flex
+                      items-center
+                      text-[12px]
+                      sm:text-sm
+                      font-medium
+                      text-[#9AA9D6]
+                      hover:text-[#E8EEFF]
+                      transition-colors
+                    "
+                  >
+                    View event
+
+                    <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
+                  </Link>
+                </div>
+              </article>
+            ))}
+
+            {/* View More */}
+            <Link
+              href="/events"
+              className="
+                group
+                flex
+                shrink-0
+                snap-start
+                w-[70vw]
+                sm:w-[280px]
+                lg:w-[320px]
+                min-h-[390px]
+                sm:min-h-[440px]
+                items-center
+                justify-center
+                rounded-xl
+                border border-dashed border-white/[0.10]
+                bg-white/[0.01]
+                transition-all duration-300
+                hover:border-[#6FA8FF]/30
+                hover:bg-white/[0.02]
+              "
+            >
+              <div className="text-center">
+
+                <div className="mx-auto mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] text-[#8F9CC2] transition-all duration-300 group-hover:border-[#6FA8FF]/40 group-hover:text-[#6FA8FF]">
+                  <ChevronIcon direction="right" />
+                </div>
+
+                <p className="text-sm font-medium text-[#E8EEFF]">
+                  View more events
+                </p>
+
+                <p className="mt-1 text-xs text-[#6F7DA8]">
+                  Explore the full CES archive
+                </p>
 
               </div>
-
-            </article>
-          ))}
-
+            </Link>
+          </div>
         </div>
+
+        {/* Carousel Indicators */}
+        <div className="mt-6 sm:mt-8 flex items-center justify-center gap-2">
+          {highlights.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              aria-label={`Go to event ${index + 1}`}
+              onClick={() => scrollToCard(index)}
+              className={`
+                h-1.5 rounded-full transition-all duration-300
+                ${
+                  activeIndex === index
+                    ? "w-6 bg-[#6FA8FF]"
+                    : "w-1.5 bg-[#596587] hover:bg-[#8F9CC2]"
+                }
+              `}
+            />
+          ))}
+        </div>
+
+        {/* Mobile View All */}
+        <Link
+          href="/events"
+          className="mt-6 flex sm:hidden items-center justify-center text-[12px] font-medium text-[#8F9CC2]"
+        >
+          View all events
+          <span className="ml-2">→</span>
+        </Link>
 
       </div>
     </section>
