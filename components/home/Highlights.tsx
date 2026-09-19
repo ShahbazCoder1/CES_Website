@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+//import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const highlights = [
@@ -24,6 +25,7 @@ const highlights = [
     title: "Code Bites 5.0",
     desc: "Our signature coding challenge bringing together dozens of students to test their problem-solving, logical thinking, and programming skills.",
     href: "/events",
+    //image: "/code-bites-5.jpg"
   },
   {
     tag: "WORKSHOP",
