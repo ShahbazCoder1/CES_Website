@@ -7,12 +7,14 @@ const galleryItems = [
     title: "SIT Hack-A-Verse 2025",
     category: "Hackathon BTS",
     desc: "Teams collaborating through the 24-hour coding sprint.",
+    image: "/sit-hack-a-verse.png"
   },
   {
     id: 2,
     title: "Campus 2 Corporate",
     category: "Industry Connect",
     desc: "Mock interviews and professional preparation sessions.",
+    image: "/campus-2-corporate.png"
   },
   {
     id: 3,
