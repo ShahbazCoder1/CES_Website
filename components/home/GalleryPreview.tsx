@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const galleryItems = [
   {
@@ -18,6 +19,7 @@ const galleryItems = [
     title: "Code Bites 5.0",
     category: "Competition Highlights",
     desc: "Participants deep in focus during the programming challenge.",
+    image: "/code-bites-5-1.jpg"
   },
 ];
 
@@ -62,17 +64,28 @@ export default function GalleryPreview() {
                 hover:bg-white/[0.02]
               "
             >
+              {/* Photo */}
+              {item.image && (
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 82vw"
+                  className="z-0 object-cover object-left transition-transform duration-500 group-hover:scale-105"
+                />
+              )}
+
               {/* Subtle texture */}
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:32px_32px] opacity-30 transition-opacity duration-300 group-hover:opacity-50" />
+              <div className="absolute inset-0 z-[1] bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:32px_32px] opacity-30 transition-opacity duration-300 group-hover:opacity-50" />
 
               {/* Visual placeholder */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(111,168,255,0.06),transparent_45%)]" />
+              <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_70%_30%,rgba(111,168,255,0.06),transparent_45%)]" />
 
               {/* Bottom fade */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/70 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-40 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/70 to-transparent" />
 
               {/* Number */}
-              <span className="absolute left-5 top-5 font-mono text-[10px] tracking-[2px] text-white/[0.15]">
+              <span className="absolute left-5 top-5 z-10 font-mono text-[10px] tracking-[2px] text-white/[0.15]">
                 {String(item.id).padStart(2, "0")}
               </span>
 
