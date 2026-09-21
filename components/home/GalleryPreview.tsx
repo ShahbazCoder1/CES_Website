@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import PhotoLinkCard from "@/components/PhotoLinkCard";
 
 const galleryItems = [
   {
@@ -109,55 +110,14 @@ export default function GalleryPreview() {
           ))}
 
           {/* View Gallery */}
-          <Link
+          <PhotoLinkCard
             href="/gallery"
-            className="
-              group relative
-              flex
-              h-60 sm:h-64
-              min-w-[70vw] sm:min-w-[300px]
-              md:min-w-0
-              shrink-0
-              snap-start
-              items-center
-              justify-center
-              overflow-hidden
-              rounded-2xl
-              border border-dashed border-white/[0.08]
-              bg-white/[0.01]
-              transition-all duration-300
-              hover:border-[#6FA8FF]/30
-              hover:bg-white/[0.02]
-            "
-          >
-            {/* Texture */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:32px_32px] opacity-30 transition-opacity duration-300 group-hover:opacity-50" />
-
-            <div className="relative flex flex-col items-center text-center">
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] text-[#8F9CC2] transition-all duration-300 group-hover:border-[#6FA8FF]/40 group-hover:text-[#E8EEFF]">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
-                >
-                  <path d="M5 12h14" />
-                  <path d="m13 6 6 6-6 6" />
-                </svg>
-              </div>
-
-              <span className="text-sm font-medium text-[var(--ces-text-secondary)] transition-colors group-hover:text-[var(--ces-text-primary)]">
-                Explore full gallery
-              </span>
-
-              <span className="mt-1 text-[11px] text-[var(--ces-text-muted)]">
-                More moments from CES
-              </span>
-            </div>
-          </Link>
+            image="/code-bites-5.jpg"
+            title="Explore full gallery"
+            subtitle="More moments from CES"
+            sizes="(min-width: 768px) 50vw, 70vw"
+            className="h-60 sm:h-64 min-w-[70vw] sm:min-w-[300px] md:min-w-0 shrink-0 snap-start"
+          />
         </div>
 
         {/* Mobile scroll hint */}
