@@ -30,14 +30,14 @@ export default function EventsHero() {
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
         <a
           href="#upcoming"
-          className="rounded-[24px] bg-[#f2f0fb] px-6 py-2.5 text-[14px] font-medium text-[#0a0812] transition-colors hover:bg-[#e2e0eb] sm:px-7 sm:py-3 sm:text-[15px]"
+          className="rounded-[24px] bg-[#f2f0fb] px-6 py-2.5 text-[14px] font-medium text-[#0a0812] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#e2e0eb] hover:shadow-[0_14px_30px_-14px_rgba(242,240,251,0.45)] sm:px-7 sm:py-3 sm:text-[15px]"
         >
           Explore Events ↓
         </a>
 
         <a
           href="#next-event"
-          className="rounded-[24px] border border-[#6FA8FF]/40 bg-[#6FA8FF]/[0.06] px-6 py-2.5 text-[14px] font-medium text-[#C9D8FF] transition-all hover:border-[#6FA8FF]/70 hover:bg-[#6FA8FF]/15 sm:px-7 sm:py-3 sm:text-[15px]"
+          className="rounded-[24px] border border-[#6FA8FF]/40 bg-[#6FA8FF]/[0.06] px-6 py-2.5 text-[14px] font-medium text-[#C9D8FF] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#6FA8FF]/70 hover:bg-[#6FA8FF]/15 hover:shadow-[0_14px_30px_-14px_rgba(111,168,255,0.55)] sm:px-7 sm:py-3 sm:text-[15px]"
         >
           Join Next Event
         </a>

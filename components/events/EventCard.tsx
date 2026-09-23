@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { categoryColors, type EventItem } from "./data";
+import { mouseGlow, glowOverlay } from "../mouseGlow";
 
 function CalendarIcon() {
   return (
@@ -78,7 +79,8 @@ export default function EventCard({
   return (
     <article
       id={event.anchorId}
-      className="group relative flex scroll-mt-28 flex-col overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.015] backdrop-blur-sm transition-all duration-300 hover:border-[#6FA8FF]/30 hover:bg-white/[0.025]"
+      onMouseMove={mouseGlow}
+      className="group relative flex scroll-mt-28 flex-col overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.015] backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-[#6FA8FF]/55 hover:bg-white/[0.025] hover:shadow-[0_24px_60px_-24px_rgba(111,168,255,0.45)]"
     >
       <div className="relative h-36 overflow-hidden border-b border-white/[0.04] sm:h-44">
         {event.image ? (
@@ -167,6 +169,9 @@ export default function EventCard({
           )}
         </div>
       </div>
+
+      {/* Cursor spotlight */}
+      <div className={glowOverlay} />
     </article>
   );
 }

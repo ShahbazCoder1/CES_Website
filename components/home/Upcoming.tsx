@@ -1,5 +1,8 @@
 "use client";
 
+import type { CSSProperties } from "react";
+import { mouseGlow, glowOverlay } from "../mouseGlow";
+
 const upcomingEvents = [
   {
     number: "01",
@@ -188,7 +191,9 @@ export default function Upcoming() {
 
                 <article
                   key={event.title}
-                  className="group relative"
+                  className="group relative transition-transform duration-300 hover:-translate-y-1.5"
+                  onMouseMove={mouseGlow}
+                  style={{ "--glow-rgb": "232,201,119" } as CSSProperties}
                 >
 
                   {/* ==================================================
@@ -204,9 +209,10 @@ export default function Upcoming() {
                       rounded-[10px]
                       bg-[#111B25]
                       shadow-[0_10px_25px_rgba(0,0,0,0.2)]
-                      transition-transform
+                      transition-all
                       duration-300
                       group-hover:-translate-y-[2px]
+                      group-hover:shadow-[0_18px_45px_-18px_rgba(232,201,119,0.4)]
                       sm:min-h-[215px]
                     "
                   >
@@ -269,6 +275,9 @@ export default function Upcoming() {
                           rounded-[8px]
                           border-2
                           border-[#F8EFD7]
+                          transition-colors
+                          duration-300
+                          group-hover:border-[#FFFCF0]
                           px-2.5
                           py-2.5
                           sm:min-h-[187px]
@@ -855,6 +864,9 @@ export default function Upcoming() {
                     </span>
 
                   </div>
+
+                  {/* Cursor spotlight (warm) */}
+                  <div className={glowOverlay} />
 
                 </article>
 

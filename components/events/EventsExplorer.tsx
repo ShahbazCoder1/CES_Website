@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import EventCard from "./EventCard";
+import { mouseGlow, glowOverlay } from "../mouseGlow";
 import type { EventItem } from "./data";
 
 function SectionHeader({
@@ -41,9 +42,16 @@ function EventGrid({
 }) {
   if (events.length === 0) {
     return (
-      <p className="rounded-xl border border-dashed border-white/[0.08] px-4 py-10 text-center text-[13px] text-[#6F7DA8]">
-        {emptyMessage}
-      </p>
+      <div
+        onMouseMove={mouseGlow}
+        className="group relative overflow-hidden rounded-xl border border-dashed border-white/[0.08] transition-all duration-300 hover:border-[#6FA8FF]/40 hover:bg-white/[0.02]"
+      >
+        <div className={glowOverlay} />
+
+        <p className="relative px-4 py-10 text-center text-[13px] text-[#6F7DA8] transition-colors duration-300 group-hover:text-[#8F9CC2]">
+          {emptyMessage}
+        </p>
+      </div>
     );
   }
 
@@ -94,8 +102,8 @@ export default function EventsExplorer({
                 transition-all duration-200
                 ${
                   active === cat.key
-                    ? "border-transparent bg-[#6FA8FF] text-[#050408]"
-                    : "border-white/[0.10] bg-white/[0.03] text-[#8F9CC2] hover:border-[#6FA8FF]/40 hover:text-[#E8EEFF]"
+                    ? "border-transparent bg-[#6FA8FF] text-[#050408] shadow-[0_8px_24px_-10px_rgba(111,168,255,0.65)] hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(111,168,255,0.8)]"
+                    : "border-white/[0.10] bg-white/[0.03] text-[#8F9CC2] hover:-translate-y-0.5 hover:border-[#6FA8FF]/55 hover:bg-white/[0.07] hover:text-[#E8EEFF] hover:shadow-[0_8px_22px_-10px_rgba(111,168,255,0.55)]"
                 }
               `}
             >
