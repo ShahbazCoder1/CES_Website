@@ -16,6 +16,9 @@ export default function Navbar() {
     "Alumni",
   ];
 
+  const linkHref = (link: string) =>
+    link === "Events" ? "/events" : `#${link.toLowerCase()}`;
+
   return (
     // Increased max-w from 1300px to 1440px to extend the navbar's maximum length
     <nav className="fixed left-1/2 top-3 z-50 w-[calc(100%-24px)] max-w-[1440px] -translate-x-1/2">
@@ -51,7 +54,7 @@ export default function Navbar() {
           {links.map((link) => (
             <a
               key={link}
-              href={`/${link.toLowerCase()}`}
+              href={linkHref(link)}
               style={{ fontFamily: "'Open Sans', sans-serif" }}
               className="whitespace-nowrap text-[14px] font-medium tracking-normal text-[#d1d7e9] transition-colors hover:text-[#ffffff]"
             >
@@ -65,7 +68,7 @@ export default function Navbar() {
           {links.slice(0, 4).map((link) => (
             <a
               key={link}
-              href={`/${link.toLowerCase()}`}
+              href={linkHref(link)}
               style={{ fontFamily: "'Open Sans', sans-serif" }}
               className="whitespace-nowrap text-[13px] font-medium tracking-normal text-[#d1d7e9] transition-colors hover:text-[#ffffff]"
             >
@@ -108,7 +111,7 @@ export default function Navbar() {
           {links.map((link) => (
             <a
               key={link}
-              href={`#${link.toLowerCase()}`}
+              href={linkHref(link)}
               onClick={() => setMenuOpen(false)}
               style={{ fontFamily: "'Open Sans', sans-serif" }}
               className="block rounded-xl px-4 py-3 text-[14px] font-medium tracking-normal text-[#d1d7e9] transition-colors hover:bg-white/[0.06] hover:text-[#ffffff]"

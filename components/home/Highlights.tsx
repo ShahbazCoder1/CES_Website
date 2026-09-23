@@ -3,6 +3,7 @@
 import Link from "next/link";
 //import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { mouseGlow, glowOverlay } from "../mouseGlow";
 
 const highlights = [
   {
@@ -106,6 +107,46 @@ export default function Highlights() {
     });
 
     setActiveIndex(closestIndex);
+
+    /* ============================================================
+        PARTIAL STACK — scroll-driven fan
+
+        Each card is nudged toward the track center (sideways tuck),
+        scaled down and tilted slightly by how far it sits from the
+        middle, so the row reads as a loosely stacked deck while
+        scrolling instead of a flat strip. Center cards win z-index;
+        a hovered card always floats above its neighbours.
+
+        Transforms are written straight to the DOM (no re-render),
+        measured from layout metrics (offsetLeft) so the effect never
+        feeds back into itself.
+    ============================================================ */
+    const half = carousel.clientWidth / 2;
+    const trackCenter = carousel.scrollLeft + half;
+
+    cards.forEach((card) => {
+      const layer = card.firstElementChild as HTMLElement | null;
+
+      if (!layer) return;
+
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const raw = (cardCenter - trackCenter) / half;
+      const dc = Math.max(-1, Math.min(1, raw));
+      const f = Math.abs(dc);
+
+      const scale = 1 - f * 0.1;
+      const ty = f * 10;
+      const tx = -dc * 16;
+      const ry = dc * 6;
+
+      layer.style.transform = `translate(${tx}px, ${ty}px) scale(${scale}) rotateY(${ry}deg)`;
+
+      const hovered = card.matches(":hover");
+
+      card.style.zIndex = hovered
+        ? "15"
+        : String(Math.max(0, Math.round((1 - f) * 10)));
+    });
   }, []);
 
   useEffect(() => {
@@ -115,15 +156,23 @@ export default function Highlights() {
 
     updateScrollState();
 
-    carousel.addEventListener("scroll", updateScrollState, {
+    let frame = 0;
+
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(updateScrollState);
+    };
+
+    carousel.addEventListener("scroll", onScroll, {
       passive: true,
     });
 
-    window.addEventListener("resize", updateScrollState);
+    window.addEventListener("resize", onScroll);
 
     return () => {
-      carousel.removeEventListener("scroll", updateScrollState);
-      window.removeEventListener("resize", updateScrollState);
+      carousel.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(frame);
     };
   }, [updateScrollState]);
 
@@ -247,20 +296,15 @@ export default function Highlights() {
             </button>
           )}
 
-          {/* RIGHT EDGE FADE */}
-          {canScrollRight && (
-            <div className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-12 sm:w-20 bg-gradient-to-l from-[#050817] to-transparent" />
-          )}
-
-          {/* LEFT EDGE FADE */}
-          {canScrollLeft && (
-            <div className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-12 sm:w-20 bg-gradient-to-r from-[#050817] to-transparent" />
-          )}
+          {/* RIGHT EDGE FADE — removed in favour of the scroll stack;
+              the dark gradient ends read as a heavy shadow and fought
+              the page background at different widths */}
 
           {/* Cards */}
           <div
             ref={carouselRef}
             className="
+              relative
               flex gap-4 sm:gap-6
               overflow-x-auto
               snap-x snap-mandatory
@@ -282,21 +326,38 @@ export default function Highlights() {
                   shrink-0
                   snap-start
                   flex-col
-                  overflow-hidden
-                  rounded-xl
-                  border border-white/[0.06]
-                  bg-white/[0.015]
-                  backdrop-blur-sm
-                  transition-all duration-300
-                  hover:border-[#6FA8FF]/30
-                  hover:bg-white/[0.025]
-
                   w-[calc(100vw-40px)]
                   sm:w-[480px]
                   lg:w-[520px]
                   xl:w-[540px]
-                "
-              >
+                  [perspective:1400px]
+                  transition-transform
+                  duration-300
+                  hover:-translate-y-2"
+                onMouseMove={mouseGlow}
+                >
+
+
+                {/* Stack layer — JS scroll transforms land here so the
+                    hover lift on the shell above never fights them */}
+                <div
+                  className="
+                    stack-layer
+                    flex
+                    h-full
+                    flex-col
+                    overflow-hidden
+                    rounded-xl
+                    border border-white/[0.06]
+                    bg-white/[0.015]
+                    backdrop-blur-sm
+                    transition-all
+                    duration-300
+                    group-hover:border-[#6FA8FF]/60
+                    group-hover:bg-white/[0.03]
+                    group-hover:shadow-[0_24px_60px_-24px_rgba(111,168,255,0.45)]
+                  "
+                >
 
                 {/* Visual Area */}
                 <div
@@ -327,6 +388,9 @@ export default function Highlights() {
                       leading-none
                       tracking-[-5px]
                       text-white/[0.035]
+                      transition-colors
+                      duration-300
+                      group-hover:text-white/[0.07]
                       select-none
                     "
                   >
@@ -335,7 +399,7 @@ export default function Highlights() {
 
                   {/* Corner Label */}
                   <div className="absolute right-4 top-4 sm:right-6 sm:top-6">
-                    <span className="text-[9px] sm:text-[10px] font-mono tracking-[2px] text-[#6F7DA8]">
+                    <span className="text-[9px] sm:text-[10px] font-mono tracking-[2px] text-[#6F7DA8] transition-colors duration-300 group-hover:text-[#6FA8FF]">
                       CES / {String(idx + 1).padStart(2, "0")}
                     </span>
                   </div>
@@ -415,14 +479,21 @@ export default function Highlights() {
                     </span>
                   </Link>
                 </div>
+                </div>
+
+                {/* Cursor spotlight */}
+                <div className={glowOverlay} />
+
               </article>
             ))}
 
             {/* View More */}
             <Link
               href="/events"
+              onMouseMove={mouseGlow}
               className="
                 group
+                relative
                 flex
                 shrink-0
                 snap-start
@@ -433,14 +504,30 @@ export default function Highlights() {
                 sm:min-h-[440px]
                 items-center
                 justify-center
-                rounded-xl
-                border border-dashed border-white/[0.10]
-                bg-white/[0.01]
-                transition-all duration-300
-                hover:border-[#6FA8FF]/30
-                hover:bg-white/[0.02]
+                [perspective:1400px]
+                transition-transform
+                duration-300
+                hover:-translate-y-1.5
               "
             >
+              <div
+                className="
+                  stack-layer
+                  flex
+                  h-full
+                  w-full
+                  items-center
+                  justify-center
+                  rounded-xl
+                  border border-dashed border-white/[0.10]
+                  bg-white/[0.01]
+                  transition-all
+                  duration-300
+                  group-hover:border-[#6FA8FF]/40
+                  group-hover:bg-white/[0.02]
+                  group-hover:shadow-[0_24px_60px_-24px_rgba(111,168,255,0.25)]
+                "
+              >
               <div className="text-center">
 
                 <div className="mx-auto mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/[0.08] text-[#8F9CC2] transition-all duration-300 group-hover:border-[#6FA8FF]/40 group-hover:text-[#6FA8FF]">
@@ -456,6 +543,10 @@ export default function Highlights() {
                 </p>
 
               </div>
+              </div>
+
+              {/* Cursor spotlight */}
+              <div className={glowOverlay} />
             </Link>
           </div>
         </div>
