@@ -51,7 +51,7 @@ export default function Navbar() {
           {links.map((link) => (
             <a
               key={link}
-              href={`#${link.toLowerCase()}`}
+              href={`/${link.toLowerCase()}`}
               style={{ fontFamily: "'Open Sans', sans-serif" }}
               className="whitespace-nowrap text-[14px] font-medium tracking-normal text-[#d1d7e9] transition-colors hover:text-[#ffffff]"
             >
@@ -65,7 +65,7 @@ export default function Navbar() {
           {links.slice(0, 4).map((link) => (
             <a
               key={link}
-              href={`#${link.toLowerCase()}`}
+              href={`/${link.toLowerCase()}`}
               style={{ fontFamily: "'Open Sans', sans-serif" }}
               className="whitespace-nowrap text-[13px] font-medium tracking-normal text-[#d1d7e9] transition-colors hover:text-[#ffffff]"
             >
