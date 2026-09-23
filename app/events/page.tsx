@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import EventsHero from "@/components/events/EventsHero";
 import EventsExplorer from "@/components/events/EventsExplorer";
 import StatsBar from "@/components/events/StatsBar";
 import {
@@ -16,9 +15,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div className="w-full">
-      <EventsHero />
-
+    <div className="w-full pt-28 sm:pt-32">
       <EventsExplorer
         categories={categories}
         upcoming={upcomingEvents}
