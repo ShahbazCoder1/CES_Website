@@ -87,55 +87,34 @@ export default function Hero() {
           </button>
         </div>
 
-        {/* Hero Visual - Completely dropped from DOM/layout on mobile */}
+        {/* Hero Visual */}
         <div
           className="
-            hidden
-            md:flex
-            relative
-            h-[clamp(160px,20vw,220px)]
-            w-[clamp(160px,20vw,220px)]
-            shrink-0
-            items-center
-            justify-center
-          "
+    hidden
+    md:flex
+    relative
+    h-[clamp(250px,31vw,370px)]
+    w-[clamp(250px,31vw,370px)]
+    shrink-0
+    items-center
+    justify-center
+  "
         >
-          {/* Glowing pulse */}
-          <div
+          {/* CES Mascot */}
+          <img
+            src="/mascot.png"
+            alt="CES mascot"
             className="
-              absolute
-              right-[clamp(0.75rem,1.3vw,1.25rem)]
-              top-1
-              h-[clamp(5px,0.5vw,8px)]
-              w-[clamp(5px,0.5vw,8px)]
-              animate-pulse
-              rounded-full
-              bg-[#7a8cff]
-            "
+    h-[155%]
+    w-[155%]
+    max-w-none
+    object-contain
+    drop-shadow-[0_0_25px_rgba(232,201,119,0.18)]
+  "
             style={{
-              boxShadow: "0 0 10px 2px rgba(122,140,255,0.5)",
+              filter: "sepia(0.2) saturate(0.9) brightness(0.9)",
             }}
           />
-
-          {/* Robot icon */}
-          <svg
-            className="
-              h-[clamp(72px,9vw,105px)]
-              w-[clamp(72px,9vw,105px)]
-              text-[#e8c977]
-            "
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="1.2"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 3h6M12 3v2M12 19v2M5 12H3M21 12h-2M7 7h10v10H7V7zM10 11h.01M14 11h.01M10 14h4"
-            />
-          </svg>
         </div>
       </div>
 
