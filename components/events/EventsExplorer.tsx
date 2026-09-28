@@ -124,12 +124,12 @@ export default function EventsExplorer({
           <SectionHeader
             kicker={"WHAT'S NEXT"}
             title="Upcoming Events"
-            subtitle="Secure your spot for the active and upcoming tech sessions."
+            subtitle="New editions are on the horizon — stay tuned."
           />
 
           <EventGrid
             events={filteredUpcoming}
-            emptyMessage="No upcoming events in this category yet — check back soon."
+            emptyMessage="No upcoming events right now — stay tuned for the next edition."
           />
         </div>
       </section>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { categoryColors, type EventItem } from "./data";
 import { mouseGlow, glowOverlay } from "../mouseGlow";
 
@@ -64,30 +65,20 @@ export default function EventCard({
 }) {
   const color = categoryColors[event.category];
   const number = String(index + 1).padStart(2, "0");
-
-  const actionContent = (
-    <>
-      {event.action.label}
-      {!event.actionMuted && <ArrowRight />}
-    </>
-  );
-
-  const actionClass = `inline-flex items-center gap-2 text-[12px] font-medium sm:text-[13px] ${
-    event.actionMuted ? "text-[#6F7DA8]" : ""
-  }`;
+  const cover = event.cover ?? event.gallery[0];
 
   return (
     <article
-      id={event.anchorId}
+      id={event.id}
       onMouseMove={mouseGlow}
       className="group relative flex scroll-mt-28 flex-col overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.015] backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:border-[#6FA8FF]/55 hover:bg-white/[0.025] hover:shadow-[0_24px_60px_-24px_rgba(111,168,255,0.45)]"
     >
       <div className="relative h-36 overflow-hidden border-b border-white/[0.04] sm:h-44">
-        {event.image ? (
+        {cover ? (
           <>
             <Image
-              src={event.image}
-              alt={event.title}
+              src={cover}
+              alt={`${event.title} — event photo`}
               fill
               sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
               className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -146,32 +137,26 @@ export default function EventCard({
           )}
         </div>
 
-        <p className="mt-3 text-[12px] leading-[1.6] text-[#8F9CC2] sm:text-[13px]">
+        <p className="mt-3 line-clamp-3 text-[12px] leading-[1.6] text-[#8F9CC2] sm:text-[13px]">
           {event.description}
         </p>
 
-        <div className="mt-auto pt-4">
-          {event.action.href ? (
-            <a
-              href={event.action.href}
-              className={`${actionClass} transition-colors`}
-              style={event.actionMuted ? undefined : { color }}
-            >
-              {actionContent}
-            </a>
-          ) : (
-            <span
-              className={actionClass}
-              style={event.actionMuted ? undefined : { color }}
-            >
-              {actionContent}
-            </span>
-          )}
+        <div className="mt-auto flex items-center gap-2 pt-4 text-[12px] font-medium text-[#9AA9D6] transition-colors group-hover:text-[#E8EEFF] sm:text-[13px]">
+          View Details
+          <ArrowRight />
         </div>
       </div>
 
       {/* Cursor spotlight */}
       <div className={glowOverlay} />
+
+
+      {/* Whole card opens the event's mini page */}
+      <Link
+        href={`/events/${event.id}`}
+        aria-label={`View details: ${event.title}`}
+        className="absolute inset-0 z-30 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6FA8FF]"
+      />
     </article>
   );
 }

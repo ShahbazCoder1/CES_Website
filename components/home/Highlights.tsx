@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-//import Image from "next/image";
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { mouseGlow, glowOverlay } from "../mouseGlow";
 
@@ -11,36 +11,40 @@ const highlights = [
     date: "03 APR 2025",
     title: "SIT Hack-A-Verse 2025",
     desc: "Our flagship 24-hour hackathon bringing together over 200 students and 50+ teams to tackle challenging real-world problem statements.",
-    href: "/events",
+    href: "/events/hack-a-verse-2025",
+    image: "/events/hack-a-verse-2025/01.jpg",
   },
   {
     tag: "INDUSTRY CONNECT",
     date: "18 AUG 2025",
     title: "Campus 2 Corporate",
     desc: "A five-day intensive program bridging the gap to corporate life through technical mock interviews, group discussions, and career preparation.",
-    href: "/events",
+    href: "/events/campus-2-corporate",
+    image: "/events/campus-2-corporate/01.png",
   },
   {
     tag: "COMPETITION",
     date: "21 MAY 2026",
     title: "Code Bites 5.0",
     desc: "Our signature coding challenge bringing together dozens of students to test their problem-solving, logical thinking, and programming skills.",
-    href: "/events",
-    //image: "/code-bites-5.jpg"
+    href: "/events/code-bites-5",
+    image: "/events/code-bites-5/01.jpg",
   },
   {
     tag: "WORKSHOP",
     date: "29 SEP 2024",
-    title: "Roadmap to Programming",
+    title: "Roadmap to Programming 1.0",
     desc: "An engaging interactive workshop providing first-year students with foundational C programming concepts and a clear vision for their coding journey.",
-    href: "/events",
+    href: "/events/roadmap-1",
+    image: "/events/code-banner.png",
   },
   {
     tag: "QUIZ COMPETITION",
     date: "18 SEP 2024",
     title: "Quiz-O-Mania",
     desc: "A thrilling three-round technical quiz competition bringing together over 35 teams across departments to showcase their technical knowledge.",
-    href: "/events",
+    href: "/events/quiz-o-mania",
+    image: "/events/quiz-o-mania/01.jpg",
   },
 ];
 
@@ -370,32 +374,47 @@ export default function Highlights() {
                     border-b border-white/[0.04]
                   "
                 >
-                  {/* Grid */}
-                  <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:16px_16px]" />
+                  {item.image ? (
+                    <>
+                      <Image
+                        src={item.image}
+                        alt={`${item.title} — event photo`}
+                        fill
+                        sizes="(min-width: 1280px) 540px, (min-width: 640px) 480px, calc(100vw - 40px)"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
+                    </>
+                  ) : (
+                    <>
+                      {/* Grid */}
+                      <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:16px_16px]" />
 
-                  {/* Large Number */}
-                  <div
-                    className="
-                      absolute
-                      bottom-1
-                      left-4
-                      sm:bottom-3
-                      sm:left-6
-                      text-[60px]
-                      sm:text-[80px]
-                      lg:text-[88px]
-                      font-medium
-                      leading-none
-                      tracking-[-5px]
-                      text-white/[0.035]
-                      transition-colors
-                      duration-300
-                      group-hover:text-white/[0.07]
-                      select-none
-                    "
-                  >
-                    {String(idx + 1).padStart(2, "0")}
-                  </div>
+                      {/* Large Number */}
+                      <div
+                        className="
+                          absolute
+                          bottom-1
+                          left-4
+                          sm:bottom-3
+                          sm:left-6
+                          text-[60px]
+                          sm:text-[80px]
+                          lg:text-[88px]
+                          font-medium
+                          leading-none
+                          tracking-[-5px]
+                          text-white/[0.035]
+                          transition-colors
+                          duration-300
+                          group-hover:text-white/[0.07]
+                          select-none
+                        "
+                      >
+                        {String(idx + 1).padStart(2, "0")}
+                      </div>
+                    </>
+                  )}
 
                   {/* Corner Label */}
                   <div className="absolute right-4 top-4 sm:right-6 sm:top-6">
@@ -456,9 +475,8 @@ export default function Highlights() {
                     </p>
                   </div>
 
-                  {/* Link */}
-                  <Link
-                    href={item.href}
+                  {/* Link (visual only — whole card is clickable) */}
+                  <span
                     className="
                       mt-5
                       sm:mt-7
@@ -468,7 +486,7 @@ export default function Highlights() {
                       sm:text-sm
                       font-medium
                       text-[#9AA9D6]
-                      hover:text-[#E8EEFF]
+                      group-hover:text-[#E8EEFF]
                       transition-colors
                     "
                   >
@@ -477,12 +495,19 @@ export default function Highlights() {
                     <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
                       →
                     </span>
-                  </Link>
+                  </span>
                 </div>
                 </div>
 
                 {/* Cursor spotlight */}
                 <div className={glowOverlay} />
+
+                {/* Whole card opens the event's mini page */}
+                <Link
+                  href={item.href}
+                  aria-label={`View details: ${item.title}`}
+                  className="absolute inset-0 z-30 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6FA8FF]"
+                />
 
               </article>
             ))}
