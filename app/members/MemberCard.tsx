@@ -10,7 +10,8 @@ interface MemberCardProps {
   member: Member;
 }
 
-export default function MemberCard({ member }: MemberCardProps) {
+export default function MemberCard({ member }:
+  MemberCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const toggleFlip = () => {
@@ -28,21 +29,18 @@ export default function MemberCard({ member }: MemberCardProps) {
     <div
       role="button"
       tabIndex={0}
-      aria-label={`${member.name}, ${member.role}. ${
-        isFlipped
-          ? "Viewing back. Click to flip to front."
-          : "Viewing front. Click to view skills and links."
-      }`}
+      aria-label={`${member.name}, ${member.role}. ${isFlipped
+        ? "Viewing back. Click to flip to front."
+        : "Viewing front. Click to view skills and links."
+        }`}
       onClick={toggleFlip}
       onKeyDown={handleKeyDown}
-      className={`group relative h-[480px] w-full cursor-pointer rounded-2xl [perspective:1000px] focus:outline-none ${
-        isFlipped ? "" : "hover:-translate-y-1"
-      } transition-transform duration-300 motion-reduce:transform-none`}
+      className={`group relative h-[500px] w-full cursor-pointer rounded-2xl [perspective:1000px] focus:outline-none ${isFlipped ? "" : "hover:-translate-y-1"
+        } transition-transform duration-300 motion-reduce:transform-none`}
     >
       <div
-        className={`relative h-full w-full rounded-2xl transition-transform duration-500 [transform-style:preserve-3d] motion-reduce:transition-none ${
-          isFlipped ? "[transform:rotateY(180deg)]" : ""
-        }`}
+        className={`relative h-full w-full rounded-2xl transition-transform duration-500 [transform-style:preserve-3d] motion-reduce:transition-none ${isFlipped ? "[transform:rotateY(180deg)]" : ""
+          }`}
       >
         {/* ================= Front Face ================= */}
         <div
@@ -50,7 +48,7 @@ export default function MemberCard({ member }: MemberCardProps) {
           className="absolute inset-0 flex h-full w-full flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-lg backdrop-blur-md transition-all duration-300 group-hover:border-ces-gold/40 group-hover:shadow-[0_0_18px_rgba(201,162,74,0.15)] [backface-visibility:hidden]"
         >
           {/* Photo container */}
-          <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-[#0c0d18]">
+          <div className="relative aspect-square w-full shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-[#0c0d18]">
             {member.photo ? (
               <Image
                 src={member.photo}
