@@ -93,7 +93,7 @@ export const memberGroups: MemberGroup[] = [
         name: "Ayush Sharma",
         role: "Associate Member",
         photo: "/Members/ayush-sharma.jpg",
-        skills: ["React", "Python", "React", "LangChain", "PostgreSQL"],
+        skills: ["React", "Python", "LangChain", "PostgreSQL"],
         github: "https://github.com/AYUSH4951",
         linkedin: "https://www.linkedin.com/in/ayush-sharma-4a2849323",
       },
