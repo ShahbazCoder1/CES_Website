@@ -121,18 +121,6 @@ export default function Achievements() {
                       </div>
                     </>
                   )}
-
-                  {/* Category Pill */}
-                  <span
-                    className="absolute left-3 top-3 rounded-full border px-2.5 py-1 font-mono text-[9px] font-semibold uppercase tracking-[1.5px] backdrop-blur-sm sm:left-4 sm:top-4 sm:text-[10px]"
-                    style={{
-                      color: "#6FA8FF",
-                      borderColor: "rgba(111,168,255,0.33)",
-                      backgroundColor: "rgba(5,4,8,0.7)",
-                    }}
-                  >
-                    {item.tag}
-                  </span>
                 </div>
 
                 {/* Card Content Area */}
