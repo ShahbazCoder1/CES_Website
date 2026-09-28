@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { mouseGlow, glowOverlay } from "@/components/mouseGlow";
 
 const achievements = [
@@ -12,6 +13,7 @@ const achievements = [
     desc: "A student team from Siliguri Institute of Technology (SIT) secured the Outstanding Paper Award at the 7th Regional Science & Technology Congress 2024–25 for their research on crime data analysis.",
     team: "Arunangshu Nag, Arpan Dey, Rounak Pramanik, Dripta Majumdar",
     mentor: "Dr. Anupam Mukherjee",
+    image: "/research-award.png",
   },
   {
     id: "02",
@@ -22,6 +24,7 @@ const achievements = [
     desc: "The research received the Outstanding Paper Presentation Award at the 8th Regional Science & Technology Congress (Region-1), 2026, held at the University of North Bengal.",
     team: "Arnav Biswas, Ayandeep Roy, Suryashis Banerjee, Rimi Dutta",
     mentor: "Dr. Anupam Mukherjee",
+    image: "/research-award-2026.jpg",
   },
   {
     id: "03",
@@ -33,6 +36,7 @@ const achievements = [
     desc: "The team secured 2nd Runner-Up at the Smart India Hackathon 2025 Grand Finale with a solution focused on smart crop advisory support for small and marginal farmers.",
     team: "Ayush Sharma (Lead), Payal Vyas, Plovdiv Kumar Kundu, Nilkamal Adhikari, Avigyan Guha, Poulami Kundu",
     mentor: "Keshav Kumar & Swarnava Mukherjee (CSE Alumni)",
+    image: "/sih-2nd-runnerup-2025.jpg",
   },
   {
     id: "04",
@@ -43,6 +47,7 @@ const achievements = [
     project: "Handheld Radio Set having Satellite Personal Tracking System",
     desc: "The team reached the Grand Finale of Smart India Hackathon 2025 with a hardware solution involving a handheld radio and satellite-enabled personal tracking system.",
     team: "Debashish Sinha, Md Shahbaz Hashmi Ansari, Ishika Paul, Prithivi Raj Sha, Manjima Ghosh, Snigdha Bhowmick",
+    image: "/sih-finalists-2025.jpg",
   },
   {
     id: "05",
@@ -54,6 +59,7 @@ const achievements = [
     desc: "The team reached the National CyberShield Hackathon finals with a project focused on detecting fake banking APKs and addressing cybersecurity threats.",
     team: "Amol Kumar, Bhaskar Kumar, Rohini Kumari, Masudar Rahaman",
     mentor: "Dr. Prasanta Kumar Roy",
+    image: "/cybershield-finalists-2025.jpg",
   },
 ];
 
@@ -91,27 +97,30 @@ export default function Achievements() {
               >
                 {/* Visual Header */}
                 <div className="relative h-32 overflow-hidden border-b border-white/[0.04] sm:h-40">
-                  <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:16px_16px]" />
-                  <div className="absolute bottom-1 left-4 select-none text-[60px] font-medium leading-none tracking-[-5px] text-white/[0.035] sm:bottom-2 sm:left-6 sm:text-[76px]">
-                    {number}
-                  </div>
-                  <div className="absolute right-4 top-4 sm:right-6 sm:top-6">
-                    <span className="font-mono text-[9px] tracking-[2px] text-[#6F7DA8] sm:text-[10px]">
-                      CES / {number}
-                    </span>
-                  </div>
-
-                  {/* Category Pill */}
-                  <span
-                    className="absolute left-3 top-3 rounded-full border px-2.5 py-1 font-mono text-[9px] font-semibold uppercase tracking-[1.5px] backdrop-blur-sm sm:left-4 sm:top-4 sm:text-[10px]"
-                    style={{
-                      color: "#6FA8FF",
-                      borderColor: "rgba(111,168,255,0.33)",
-                      backgroundColor: "rgba(5,4,8,0.7)",
-                    }}
-                  >
-                    {item.tag}
-                  </span>
+                  {item.image ? (
+                    <>
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                    </>
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:16px_16px]" />
+                      <div className="absolute bottom-1 left-4 select-none text-[60px] font-medium leading-none tracking-[-5px] text-white/[0.035] sm:bottom-2 sm:left-6 sm:text-[76px]">
+                        {number}
+                      </div>
+                      <div className="absolute right-4 top-4 sm:right-6 sm:top-6">
+                        <span className="font-mono text-[9px] tracking-[2px] text-[#6F7DA8] sm:text-[10px]">
+                          CES / {number}
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 {/* Card Content Area */}
