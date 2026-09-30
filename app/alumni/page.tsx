@@ -211,11 +211,6 @@ export default function AlumniPage() {
             );
           })}
         </div>
-
-        {/* Small Interaction Hint */}
-        <p className="mt-12 text-center text-xs tracking-wider text-[#7A8AA3]">
-          Click an alumni card to view their professional profile.
-        </p>
       </section>
     </div>
   );

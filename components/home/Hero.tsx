@@ -16,6 +16,7 @@ export default function Hero() {
           flex-col items-center justify-between
           gap-[clamp(2rem,5vw,5rem)]
           my-auto
+          translate-y-[clamp(1rem,4vh,3rem)]
           md:flex-row
         "
       >
@@ -61,8 +62,10 @@ export default function Hero() {
               text-[#8b85b3]
             "
           >
-            Official Computer Science &amp; Engineering Department Club of<br />
-            Siliguri Institute of Technology
+            Official Computer Science & Engineering Department Club of<br />
+            <span className="text-[#ffffff]">
+              Siliguri Institute of Technology
+            </span>
           </p>
 
           {/* CTA */}
@@ -90,27 +93,27 @@ export default function Hero() {
         {/* Hero Visual */}
         <div
           className="
-    hidden
-    md:flex
-    relative
-    h-[clamp(250px,31vw,370px)]
-    w-[clamp(250px,31vw,370px)]
-    shrink-0
-    items-center
-    justify-center
-  "
+            hidden
+            md:flex
+            relative
+            h-[clamp(250px,31vw,370px)]
+            w-[clamp(250px,31vw,370px)]
+            shrink-0
+            items-center
+            justify-center
+          "
         >
           {/* CES Mascot */}
           <img
             src="/mascot.png"
             alt="CES mascot"
             className="
-    h-[155%]
-    w-[155%]
-    max-w-none
-    object-contain
-    drop-shadow-[0_0_25px_rgba(232,201,119,0.18)]
-  "
+              h-[155%]
+              w-[155%]
+              max-w-none
+              object-contain
+              drop-shadow-[0_0_25px_rgba(232,201,119,0.18)]
+            "
             style={{
               filter: "sepia(0.2) saturate(0.9) brightness(0.9)",
             }}
