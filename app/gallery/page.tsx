@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import GalleryContainer from "@/components/gallery/GalleryContainer";
+import GalleryContainer from "./GalleryContainer";
 
 export const metadata: Metadata = {
   title: "Gallery | Computer Engineers' Society",
