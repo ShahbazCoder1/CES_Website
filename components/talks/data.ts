@@ -62,7 +62,7 @@ export const gradTalks: GradTalk[] = [
   {
     name: "Bishal Das",
     classYear: "2020",
-    role: "CES Alumni • Season 2",
+    role: "Software Developer • Accenture",
     title: "Lessons from the journey after college",
     description:
       "Mr. Bishal joins the Grad Talks alumni series to share experiences and advice from his journey after graduating from CSE at SIT.",
