@@ -1,251 +1,135 @@
-# CES Website — Contribution Guide
+# Computer Engineers' Society — SIT
 
-Repository: https://github.com/sitcesclub/CES_Website
+[![Website](https://img.shields.io/badge/Website-sitces.in-6d5dfc?style=flat-square)](https://sitces.in)
+[![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
 
-This guide covers the standard workflow for contributing to the CES Website.
+<p align="center">
+  <img width="180" src="public/ces-logo-main.png" alt="Computer Engineers' Society logo">
+</p>
+
+<p align="center">
+  The official website of the <strong>Computer Engineers' Society (CES)</strong><br>
+  Siliguri Institute of Technology
+</p>
 
 ---
 
-## 1. Fork & Clone
+## About
 
-First, **Fork** the repository on GitHub.
+The Computer Engineers' Society (CES) is the student community for Computer Science and Engineering at **Siliguri Institute of Technology**.
 
-Then clone **your fork**:
+This website brings together the society's activities, events, projects, domains, achievements, and members in one place.
+
+It is designed to serve as both the public face of CES and a central place for students to discover what the society is building and doing.
+
+## Tech Stack
+
+- **Next.js** — React framework for the website
+- **TypeScript** — Type-safe development
+- **Tailwind CSS** — Styling and responsive layouts
+- **React** — UI components and interactions
+
+## Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/)
+- npm, pnpm, yarn, or another supported package manager
+
+### Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/CES_Website.git
+git clone https://github.com/sitcesclub/CES_Website.git
 cd CES_Website
 ```
 
-Install dependencies:
+### Install dependencies
 
 ```bash
 npm install
 ```
 
----
-
-## 2. Set Up `upstream`
-
-`origin` = **your fork**
-`upstream` = **official CES repository**
-
-Add upstream:
-
-```bash
-git remote add upstream https://github.com/sitcesclub/CES_Website.git
-```
-
-Check:
-
-```bash
-git remote -v
-```
-
-You should have:
-
-```text
-origin    → YOUR_USERNAME/CES_Website
-upstream  → sitcesclub/CES_Website
-```
-
-This setup is the **same on Windows and Linux**. Git Bash / PowerShell / Terminal can all be used.
-
----
-
-## 3. Before Starting Any New Task
-
-**Always start from the latest `main`.**
-
-```bash
-git checkout main
-git fetch upstream
-git pull upstream main
-```
-
-Then create a new branch:
-
-```bash
-git checkout -b feature/your-feature
-```
-
-Examples:
-
-```text
-feature/gallery
-feature/events-section
-fix/mobile-navbar
-content/about-section
-```
-
-**Never develop directly on `main`.**
-
----
-
-## 4. Code & Test
-
-Start the website:
+### Start the development server
 
 ```bash
 npm run dev
 ```
 
-Open:
+The website will be available at:
 
 ```text
 http://localhost:3000
 ```
 
-Before committing:
-
-```bash
-npm run lint
-npm run build
-```
-
-Also manually test the changes, especially on **mobile and desktop** if you changed UI.
-
----
-
-## 5. Commit
-
-Check your changes:
-
-```bash
-git status
-git diff
-```
-
-Then:
-
-```bash
-git add .
-git commit -m "Add gallery section"
-```
-
-Keep commits clear and relevant.
-
-✅ `Fix mobile navbar`
-✅ `Add events section`
-❌ `update`
-❌ `changes`
-❌ `final final`
-
----
-
-## 6. Push Your Branch
-
-```bash
-git push -u origin feature/your-feature
-```
-
-After the first push:
-
-```bash
-git push
-```
-
----
-
-## 7. Create the Pull Request
-
-Go to your fork on GitHub and click **Compare & pull request**.
-
-Make sure:
+## Project Structure
 
 ```text
-base repository:    sitcesclub/CES_Website
-base branch:       main
-
-head repository:   YOUR_USERNAME/CES_Website
-compare branch:    feature/your-feature
+ces_website/
+├── public/
+│   └── ...
+├── src/
+│   ├── app/
+│   ├── components/
+│   │   └── home/
+│   └── ...
+├── package.json
+└── README.md
 ```
 
-Your PR should contain:
+The `components/home` directory contains the reusable sections that make up the main CES website.
 
-* **What you changed**
-* **Why you changed it**
-* **How you tested it**
+## Development
 
----
-
-## 8. Visual Work = Screenshots / Screen Recording
-
-If your PR changes anything visual/UI:
-
-### Always attach proof.
-
-**Screenshots are required**, and **screen recordings are preferred** when they demonstrate interaction or animation.
-
-Examples:
-
-* New section → screenshot
-* Responsive/mobile changes → desktop + mobile screenshots
-* Animation → screen recording
-* Carousel/slider → screen recording
-* Hover effects → screen recording
-* Interactive components → screen recording
-* Bug fix → before/after screenshots or recording
-
-A good PR should let the reviewer **see the result without having to run the project first**.
-
-> **If it's a visual change, show the visual change.**
-
----
-
-## 9. If Changes Are Requested
-
-Don't create another PR.
-
-Simply make the changes on the **same branch**:
+Run the development server with:
 
 ```bash
-git add .
-git commit -m "Address review feedback"
-git push
-```
-
-The existing PR will automatically update.
-
----
-
-#  Quick Workflow
-
-After your initial setup, this is what you'll use most of the time:
-
-```bash
-# Get latest code
-git checkout main
-git fetch upstream
-git pull upstream main
-
-# New branch
-git checkout -b feature/my-feature
-
-# Code + test
 npm run dev
-npm run lint
+```
+
+Build the project for production:
+
+```bash
 npm run build
-
-# Commit
-git add .
-git commit -m "Describe the change"
-
-# Push
-git push -u origin feature/my-feature
 ```
 
-Then open a **Pull Request → CES `main`**.
+Start the production build:
 
-### Remember
-
-```text
-upstream → CES official repository
-origin   → your fork
-
-main     → keep clean
-branch   → do your work
-PR       → submit your work
+```bash
+npm start
 ```
 
-**Keep PRs focused, test your changes, and always show visual work.**
+Check the project for lint issues:
+
+```bash
+npm run lint
+```
+
+## Contributing
+
+Contributions to the CES website are welcome.
+
+Please read [`CONTRIBUTING.md`](CONTRIBUTING.md) for the contribution guidelines, development workflow, and pull request process before making a contribution.
+
+## Issues & Suggestions
+
+Found a bug or have an idea for the website?
+
+Please open an issue with enough information for someone else to reproduce or understand it.
+
+For feature requests, describe:
+
+- What you want to improve
+- Why it would be useful
+- Any relevant design or implementation details
+
+
+---
+
+<p align="center">
+  Built with care by the <strong>Computer Engineers' Society</strong><br>
+  Siliguri Institute of Technology
+</p>
