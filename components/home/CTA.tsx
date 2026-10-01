@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function CTA() {
   return (
     <section id="connect" className="min-h-screen flex flex-col justify-center items-center border-t border-white/[0.03] text-center relative overflow-hidden py-12 md:py-20 bg-transparent">
@@ -15,14 +17,12 @@ export default function CTA() {
         </p>
         
         <div className="pt-3 md:pt-4 flex justify-center w-full">
-          <a
-            href="https://linktr.ee" 
-            target="_blank" 
-            rel="noopener noreferrer"
+          <Link
+            href="/links"
             className="inline-flex items-center justify-center px-6 py-2.5 md:px-9 md:py-3.5 rounded-full text-[13px] md:text-[14px] font-bold tracking-wide uppercase bg-[#EAB241] text-[#1E1D1A] hover:bg-[#D49E30] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 shadow-lg shadow-[#EAB241]/10 hover:shadow-[#EAB241]/20 whitespace-nowrap"
           >
             Connect with CES
-          </a>
+          </Link>
         </div>
       </div>
     </section>
