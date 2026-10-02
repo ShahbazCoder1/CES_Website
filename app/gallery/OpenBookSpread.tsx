@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useCallback } from "react";
-import type { BookCategory, GalleryEvent, GalleryPhoto } from "./galleryData";
+import type { BookCategory, GalleryPhoto } from "./galleryData";
 import AlbumEventSpread from "./EditorialTemplates";
 
 interface OpenBookSpreadProps {
@@ -23,11 +23,24 @@ export default function OpenBookSpread({
   onReturnToGallery,
   onPhotoClick,
 }: OpenBookSpreadProps) {
-  const events = category.events;
-  const currentEvent: GalleryEvent | undefined = events[currentEventIndex];
+  // Map category events into page spreads (up to 4 photos per spread)
+  const spreads = category.events.flatMap((event, eventIndex) => {
+    const totalPages = Math.max(1, Math.ceil(event.photos.length / 4));
+    return Array.from({ length: totalPages }, (_, pageIndex) => ({
+      eventIndex,
+      event,
+      pageIndex,
+      totalPages,
+      photos: event.photos.slice(pageIndex * 4, pageIndex * 4 + 4),
+      photoStartOffset: pageIndex * 4,
+    }));
+  });
+
+  const currentSpread = spreads[currentEventIndex] || spreads[0];
+  const currentEvent = currentSpread?.event;
 
   const canGoPrevious = currentEventIndex > 0;
-  const canGoNext = currentEventIndex < events.length - 1;
+  const canGoNext = currentEventIndex < spreads.length - 1;
 
   const handlePrevious = useCallback(() => {
     if (canGoPrevious) onEventChange(currentEventIndex - 1);
@@ -66,15 +79,19 @@ export default function OpenBookSpread({
           <span>Back to Gallery</span>
         </button>
 
-        {/* Simple Indicator: "Hackathons · 2026 · 3 of 3" */}
+        {/* Clean Header Indicator: "Code Bites 4.0 · 2024 · Page 1 of 6" */}
         <div className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 font-mono text-xs sm:text-sm text-[var(--ces-text-primary)]">
-          <span className="font-semibold text-white">{category.title}</span>
+          <span className="font-semibold text-white">{currentEvent?.title}</span>
           <span className="mx-2 text-white/30">·</span>
           <span className="text-[var(--ces-gold)]">{currentEvent?.year}</span>
-          <span className="mx-2 text-white/30">·</span>
-          <span className="text-[var(--ces-text-muted)]">
-            {currentEventIndex + 1} of {events.length}
-          </span>
+          {currentSpread && currentSpread.totalPages > 1 && (
+            <>
+              <span className="mx-2 text-white/30">·</span>
+              <span className="text-[var(--ces-text-muted)]">
+                Page {currentSpread.pageIndex + 1} of {currentSpread.totalPages}
+              </span>
+            </>
+          )}
         </div>
 
         {/* Quick Category Switcher */}
@@ -112,7 +129,7 @@ export default function OpenBookSpread({
           type="button"
           onClick={handlePrevious}
           disabled={!canGoPrevious}
-          aria-label="Previous event"
+          aria-label="Previous page spread"
           className={`
             hidden md:flex absolute -left-6 lg:-left-9 z-30
             h-13 w-13 lg:h-14 lg:w-14
@@ -133,7 +150,7 @@ export default function OpenBookSpread({
           type="button"
           onClick={handleNext}
           disabled={!canGoNext}
-          aria-label="Next event"
+          aria-label="Next page spread"
           className={`
             hidden md:flex absolute -right-6 lg:-right-9 z-30
             h-13 w-13 lg:h-14 lg:w-14
@@ -203,11 +220,16 @@ export default function OpenBookSpread({
 
             {/* Desktop Layout */}
             <div className="hidden md:block h-full w-full">
-              {currentEvent && (
+              {currentSpread && (
                 <AlbumEventSpread
-                  event={currentEvent}
-                  onPhotoClick={(photo, index) =>
-                    onPhotoClick(photo, index, currentEvent.title)
+                  event={currentSpread.event}
+                  photos={currentSpread.photos}
+                  onPhotoClick={(photo, localIndex) =>
+                    onPhotoClick(
+                      photo,
+                      currentSpread.photoStartOffset + localIndex,
+                      currentSpread.event.title
+                    )
                   }
                   isMobile={false}
                 />
@@ -216,11 +238,16 @@ export default function OpenBookSpread({
 
             {/* Mobile Layout */}
             <div className="block md:hidden p-4">
-              {currentEvent && (
+              {currentSpread && (
                 <AlbumEventSpread
-                  event={currentEvent}
-                  onPhotoClick={(photo, index) =>
-                    onPhotoClick(photo, index, currentEvent.title)
+                  event={currentSpread.event}
+                  photos={currentSpread.photos}
+                  onPhotoClick={(photo, localIndex) =>
+                    onPhotoClick(
+                      photo,
+                      currentSpread.photoStartOffset + localIndex,
+                      currentSpread.event.title
+                    )
                   }
                   isMobile={true}
                 />

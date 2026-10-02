@@ -40,15 +40,15 @@ export default function GalleryContainer() {
   // User clicks "Open Book →" in the preview modal
   const handleOpenBook = (category: BookCategory) => {
     setSelectedCategory(category);
-    // Open to the most recent event by default (last index)
-    setCurrentEventIndex(category.events.length - 1);
+    // Open to the first page spread by default (index 0)
+    setCurrentEventIndex(0);
     setViewMode("open");
   };
 
   // Switch category directly inside the open album
   const handleSwitchCategoryInSpread = (category: BookCategory) => {
     setSelectedCategory(category);
-    setCurrentEventIndex(category.events.length - 1);
+    setCurrentEventIndex(0);
   };
 
   // Return to gallery shelf
