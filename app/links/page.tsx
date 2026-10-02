@@ -1,7 +1,14 @@
 // Save as: app/links/page.jsx  (App Router)  →  visit /links
 // For Pages Router: save as pages/links.jsx and change `export default function` accordingly (it works as-is).
 
-const LINKS = [
+interface LinkItem {
+    label: string;
+    note: string;
+    href: string;
+    primary?: boolean;
+}
+
+const LINKS: LinkItem[] = [
     { label: "Instagram", note: "sitcesclub", href: "https://www.instagram.com/sitcesclub?stkn=YmZjYXF4aTR5d21x" },
     { label: "LinkedIn", note: "Computer Engineers' Society", href: "https://www.linkedin.com/company/computer-engineers-society-sit/" },
     { label: "GitHub", note: "sitcesclub", href: "https://github.com/sitcesclub" },
@@ -22,7 +29,7 @@ export default function LinksPage() {
             <style>{css}</style>
 
             <header className="head">
-                <h1>Computer Engineers' Society</h1>
+                <h1>Computer Engineers&apos; Society</h1>
                 <p>Learn with us. Build with us. Grow with us.</p>
             </header>
 
@@ -45,7 +52,7 @@ export default function LinksPage() {
                 </ul>
             </nav>
 
-            <footer>© {new Date().getFullYear()} Computer Engineers' Society</footer>
+            <footer>&copy; {new Date().getFullYear()} Computer Engineers&apos; Society</footer>
         </main>
     );
 }

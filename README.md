@@ -108,6 +108,12 @@ Check the project for lint issues:
 npm run lint
 ```
 
+Run TypeScript type-checking:
+
+```bash
+npm run typecheck
+```
+
 ## Contributing
 
 Contributions to the CES website are welcome.
