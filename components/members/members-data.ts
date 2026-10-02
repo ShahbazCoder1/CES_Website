@@ -147,7 +147,7 @@ export const memberGroups: MemberGroup[] = [
       },
       {
         id: "associate-8",
-        name: "Shreyashi Dutta",
+        name: "Shreyasi Dutta",
         role: "Associate Member",
         photo: "/Members/shreyashi-dutta.jpg",
         skills: ["Java", "MERN Stack"],
@@ -176,7 +176,7 @@ export const memberGroups: MemberGroup[] = [
       },
       {
         id: "associate-11",
-        name: "Md. Shahbaz Hashmi Ansari",
+        name: "Md Shahbaz Hashmi Ansari",
         role: "Associate Member",
         photo: "/Members/md-shahbaz-hashmi-ansari.png",
         photoPosition: "center",

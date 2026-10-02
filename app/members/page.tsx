@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import MembersHero from "./MembersHero";
-import MembersDirectory from "./MembersDirectory";
+import MembersHero from "@/components/members/MembersHero";
+import MembersDirectory from "@/components/members/MembersDirectory";
 
 export const metadata: Metadata = {
   title: "Members | Computer Engineers' Society",
