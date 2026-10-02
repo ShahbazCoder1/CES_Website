@@ -11,12 +11,12 @@
  */
 
 export interface Member {
-  id: string;
+  id?: string;
   name: string;
-  role: string;
+  role?: string;
   photo: string | null; // Path relative to public root, e.g. "/members/name.jpg", or null for placeholder
   photoPosition?: string; // Optional CSS object-position for head/face alignment
-  skills: string[];
+  skills?: string[];
   github?: string;
   linkedin?: string;
 }
@@ -147,7 +147,7 @@ export const memberGroups: MemberGroup[] = [
       },
       {
         id: "associate-8",
-        name: "Shreyashi Dutta",
+        name: "Shreyasi Dutta",
         role: "Associate Member",
         photo: "/Members/shreyashi-dutta.jpg",
         skills: ["Java", "MERN Stack"],
@@ -176,7 +176,7 @@ export const memberGroups: MemberGroup[] = [
       },
       {
         id: "associate-11",
-        name: "Md. Shahbaz Hashmi Ansari",
+        name: "Md Shahbaz Hashmi Ansari",
         role: "Associate Member",
         photo: "/Members/md-shahbaz-hashmi-ansari.png",
         photoPosition: "center",
@@ -282,3 +282,93 @@ export const memberGroups: MemberGroup[] = [
     ],
   },
 ];
+
+/* ============================================================
+   Alumni Dataset
+   ============================================================ */
+
+export interface AlumniBatch {
+  year: string;
+  badge: string;
+  members: Member[];
+}
+
+export const alumniBatches: AlumniBatch[] = [
+  {
+    year: "2025",
+    badge: "2025 PPO",
+    members: [
+      {
+        id: "alumni-2025-arunangshu",
+        name: "Arunangshu Nag",
+        role: "2025 PPO",
+        photo: "/alumni/ArunangshuNag.png",
+        linkedin: "https://www.linkedin.com/",
+      },
+      {
+        id: "alumni-2025-arpan",
+        name: "Arpan Dey",
+        role: "2025 PPO",
+        photo: "/alumni/ArpanDey.png",
+        linkedin: "https://www.linkedin.com/",
+      },
+      {
+        id: "alumni-2025-dripta",
+        name: "Dripta Majumdar",
+        role: "2025 PPO",
+        photo: "/alumni/DriptaMajumdar.png",
+        linkedin: "https://www.linkedin.com/",
+      },
+      {
+        id: "alumni-2025-naman",
+        name: "Naman Raj",
+        role: "2025 PPO",
+        photo: "/alumni/NamanRaj.png",
+        linkedin: "https://www.linkedin.com/",
+      },
+    ],
+  },
+  {
+    year: "2026",
+    badge: "2026 PPO",
+    members: [
+      {
+        id: "alumni-2026-arnav",
+        name: "Arnav Biswas",
+        role: "2026 PPO",
+        photo: "/alumni/ArnavBiswas.png",
+        linkedin: "https://www.linkedin.com/",
+      },
+      {
+        id: "alumni-2026-suryashis",
+        name: "Suryashis Banerjee",
+        role: "2026 PPO",
+        photo: "/alumni/SuryashisBanerjee.png",
+        linkedin: "https://www.linkedin.com/",
+      },
+      {
+        id: "alumni-2026-ratnojit",
+        name: "Ratnojit Saha",
+        role: "2026 PPO",
+        photo: "/alumni/RatnojitSaha.png",
+        linkedin: "https://www.linkedin.com/",
+      },
+      {
+        id: "alumni-2026-rimi",
+        name: "Rimi Dutta",
+        role: "2026 PPO",
+        photo: "/alumni/RimiDutta.png",
+        linkedin: "https://www.linkedin.com/",
+      },
+      {
+        id: "alumni-2026-swarnadeep",
+        name: "Swarnadeep Saha Poddar",
+        role: "2026 PPO",
+        photo: "/alumni/SwarnadeeepSahaPoddar.png",
+        linkedin: "https://www.linkedin.com/",
+      },
+    ],
+  },
+];
+
+export const alumniMembers: Member[] = alumniBatches.flatMap((b) => b.members);
