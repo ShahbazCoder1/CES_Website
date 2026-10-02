@@ -32,7 +32,7 @@ export default function LinksPage() {
                         <li key={l.label}>
                             <a
                                 href={l.href}
-                                className={l.primary ? "link primary" : "link"}
+                                className={(l as { primary?: boolean }).primary ? "link primary" : "link"}
                                 {...(l.href.startsWith("http")
                                     ? { target: "_blank", rel: "noopener noreferrer" }
                                     : {})}

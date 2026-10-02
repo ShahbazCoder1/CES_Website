@@ -5,16 +5,18 @@ import type { GalleryEvent, GalleryPhoto } from "./galleryData";
 
 interface AlbumPageProps {
   event: GalleryEvent;
+  photos?: GalleryPhoto[];
   onPhotoClick: (photo: GalleryPhoto, index: number) => void;
   isMobile?: boolean;
 }
 
 export default function AlbumEventSpread({
   event,
+  photos: photosProp,
   onPhotoClick,
   isMobile = false,
 }: AlbumPageProps) {
-  const photos = event.photos;
+  const photos = photosProp || event.photos;
   const p1 = photos[0];
   const p2 = photos[1];
   const p3 = photos[2];
@@ -45,18 +47,16 @@ export default function AlbumEventSpread({
               onClick={() => onPhotoClick(photo, i)}
               className="group relative cursor-pointer overflow-hidden rounded-md border border-[#dcd4c5] bg-white p-2 shadow-xs transition-transform duration-200 hover:scale-[1.01]"
             >
-              <div className="relative h-44 sm:h-48 w-full overflow-hidden rounded-xs bg-[#e8e4dc]">
+              <div className="relative h-48 sm:h-52 w-full overflow-hidden rounded-xs bg-[#e8e4dc]">
                 <Image
                   src={photo.src}
-                  alt={photo.caption}
+                  alt={photo.caption || event.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 500px"
-                  className="object-cover"
+                  style={photo.objectPosition ? { objectPosition: photo.objectPosition } : undefined}
+                  className={photo.objectFit === "contain" ? "object-contain" : "object-cover"}
                 />
               </div>
-              <p className="mt-1.5 font-sans text-xs text-[#5a6478]">
-                {photo.caption}
-              </p>
             </div>
           ))}
         </div>
@@ -95,20 +95,18 @@ export default function AlbumEventSpread({
           {p1 && (
             <div
               onClick={() => onPhotoClick(p1, 0)}
-              className="group relative mt-6 cursor-pointer rounded-sm border border-[#dcd4c5] bg-white p-2.5 shadow-sm transition-all duration-200 hover:shadow-md hover:border-[#b8ad99]"
+              className="group relative mt-6 cursor-pointer rounded-sm border border-[#dcd4c5] bg-white p-2 shadow-sm transition-all duration-200 hover:shadow-md hover:border-[#b8ad99]"
             >
-              <div className="relative h-48 lg:h-52 w-full overflow-hidden rounded-xs bg-[#e8e4dc]">
+              <div className="relative h-52 lg:h-56 w-full overflow-hidden rounded-xs bg-[#e8e4dc]">
                 <Image
                   src={p1.src}
-                  alt={p1.caption}
+                  alt={p1.caption || event.title}
                   fill
                   sizes="500px"
-                  className="object-cover transition-transform duration-300 group-hover:scale-102"
+                  style={p1.objectPosition ? { objectPosition: p1.objectPosition } : undefined}
+                  className={`${p1.objectFit === "contain" ? "object-contain" : "object-cover"} transition-transform duration-300 group-hover:scale-102`}
                 />
               </div>
-              <p className="mt-2 text-xs text-[#5a6478] font-medium">
-                {p1.caption}
-              </p>
             </div>
           )}
         </div>
@@ -128,18 +126,16 @@ export default function AlbumEventSpread({
               onClick={() => onPhotoClick(p2, 1)}
               className="group relative cursor-pointer rounded-sm border border-[#dcd4c5] bg-white p-2 shadow-sm transition-all duration-200 hover:shadow-md hover:border-[#b8ad99]"
             >
-              <div className="relative h-36 lg:h-40 w-full overflow-hidden rounded-xs bg-[#e8e4dc]">
+              <div className="relative h-40 lg:h-44 w-full overflow-hidden rounded-xs bg-[#e8e4dc]">
                 <Image
                   src={p2.src}
-                  alt={p2.caption}
+                  alt={p2.caption || event.title}
                   fill
                   sizes="500px"
-                  className="object-cover transition-transform duration-300 group-hover:scale-102"
+                  style={p2.objectPosition ? { objectPosition: p2.objectPosition } : undefined}
+                  className={`${p2.objectFit === "contain" ? "object-contain" : "object-cover"} transition-transform duration-300 group-hover:scale-102`}
                 />
               </div>
-              <p className="mt-1.5 text-xs text-[#5a6478]">
-                {p2.caption}
-              </p>
             </div>
           )}
 
@@ -150,18 +146,16 @@ export default function AlbumEventSpread({
                 onClick={() => onPhotoClick(p3, 2)}
                 className="group relative cursor-pointer rounded-sm border border-[#dcd4c5] bg-white p-2 shadow-sm transition-all duration-200 hover:shadow-md hover:border-[#b8ad99]"
               >
-                <div className="relative h-32 lg:h-36 w-full overflow-hidden rounded-xs bg-[#e8e4dc]">
+                <div className="relative h-36 lg:h-40 w-full overflow-hidden rounded-xs bg-[#e8e4dc]">
                   <Image
                     src={p3.src}
-                    alt={p3.caption}
+                    alt={p3.caption || event.title}
                     fill
                     sizes="350px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-102"
+                    style={p3.objectPosition ? { objectPosition: p3.objectPosition } : undefined}
+                    className={`${p3.objectFit === "contain" ? "object-contain" : "object-cover"} transition-transform duration-300 group-hover:scale-102`}
                   />
                 </div>
-                <p className="mt-1.5 text-xs text-[#5a6478] truncate">
-                  {p3.caption}
-                </p>
               </div>
             )}
 
@@ -170,18 +164,16 @@ export default function AlbumEventSpread({
                 onClick={() => onPhotoClick(p4, 3)}
                 className="group relative cursor-pointer rounded-sm border border-[#dcd4c5] bg-white p-2 shadow-sm transition-all duration-200 hover:shadow-md hover:border-[#b8ad99]"
               >
-                <div className="relative h-32 lg:h-36 w-full overflow-hidden rounded-xs bg-[#e8e4dc]">
+                <div className="relative h-36 lg:h-40 w-full overflow-hidden rounded-xs bg-[#e8e4dc]">
                   <Image
                     src={p4.src}
-                    alt={p4.caption}
+                    alt={p4.caption || event.title}
                     fill
                     sizes="350px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-102"
+                    style={p4.objectPosition ? { objectPosition: p4.objectPosition } : undefined}
+                    className={`${p4.objectFit === "contain" ? "object-contain" : "object-cover"} transition-transform duration-300 group-hover:scale-102`}
                   />
                 </div>
-                <p className="mt-1.5 text-xs text-[#5a6478] truncate">
-                  {p4.caption}
-                </p>
               </div>
             )}
           </div>
