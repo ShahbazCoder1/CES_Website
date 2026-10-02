@@ -5,9 +5,9 @@ import { memberGroups } from "./members-data";
 import MemberAccordion from "./MemberAccordion";
 
 export default function MembersDirectory() {
-  // Multi-open accordion state: all sections closed by default initially
+  // Multi-open accordion state: Senior Associate Members open by default
   const [openGroupIds, setOpenGroupIds] = useState<Set<string>>(
-    () => new Set()
+    () => new Set(["senior-associates"])
   );
 
   // Track open session generation per group to reset card flip state on reopen
@@ -33,11 +33,11 @@ export default function MembersDirectory() {
   return (
     <section
       id="members-directory"
-      className="relative z-10 w-full py-[clamp(3rem,6vh,5rem)] [overflow-anchor:none]"
+      className="relative z-10 w-full pt-2 pb-24 sm:pb-32 [overflow-anchor:none]"
       aria-labelledby="directory-heading"
     >
-      {/* Section Header / Eyebrow */}
-      <div className="mb-6 flex items-center justify-between">
+      {/* Section Header / Eyebrow (no badge and no border line below) */}
+      <div className="mb-6">
         <h2
           id="directory-heading"
           className="font-mono text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-ces-gold"
@@ -47,7 +47,7 @@ export default function MembersDirectory() {
       </div>
 
       {/* Directory Accordion Rows */}
-      <div className="border-t border-white/10 [overflow-anchor:none]">
+      <div className="[overflow-anchor:none]">
         {memberGroups.map((group) => (
           <MemberAccordion
             key={group.id}

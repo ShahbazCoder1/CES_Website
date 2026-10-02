@@ -94,30 +94,44 @@ export default function MemberAccordion({
           onClick={handleToggle}
           aria-expanded={isOpen}
           aria-controls={panelId}
-          className="group flex min-h-[64px] w-full items-center justify-between py-5 text-left transition-colors duration-200 hover:text-white outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0"
+          className="group flex min-h-[64px] w-full items-center justify-between py-5 text-left transition-colors duration-200 outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0"
         >
           <div className="flex items-center gap-4 sm:gap-8">
             {/* Numeric Index */}
-            <span className="font-mono text-sm sm:text-base text-ces-text-muted transition-colors duration-200 group-hover:text-ces-gold">
+            <span
+              className={`font-mono text-sm sm:text-base transition-colors duration-200 ${
+                isOpen ? "text-ces-gold font-semibold" : "text-ces-text-muted group-hover:text-ces-gold"
+              }`}
+            >
               {group.index}
             </span>
 
             {/* Group Title */}
-            <span className="text-lg sm:text-2xl font-medium tracking-tight text-ces-text-primary transition-colors duration-200 group-hover:text-white">
+            <span
+              className={`text-lg sm:text-2xl font-medium tracking-tight transition-colors duration-200 ${
+                isOpen ? "text-white" : "text-ces-text-primary group-hover:text-white"
+              }`}
+            >
               {group.title}
             </span>
           </div>
 
           <div className="flex items-center gap-3 sm:gap-6">
             {/* Dynamic member count */}
-            <span className="font-mono text-xs sm:text-sm text-ces-text-muted">
+            <span
+              className={`font-mono text-xs sm:text-sm transition-colors ${
+                isOpen ? "text-ces-gold/90 font-medium" : "text-ces-text-muted"
+              }`}
+            >
               {group.members.length} members
             </span>
 
             {/* Rotating Chevron */}
             <span
-              className={`flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-ces-text-muted transition-transform duration-300 group-hover:border-white/20 group-hover:text-white ${
-                isOpen ? "rotate-180" : ""
+              className={`flex h-8 w-8 items-center justify-center rounded-full border transition-all duration-300 ${
+                isOpen
+                  ? "rotate-180 border-ces-gold/40 bg-ces-gold/15 text-ces-gold shadow-[0_0_12px_rgba(201,162,74,0.25)]"
+                  : "border-white/10 bg-white/[0.03] text-ces-text-muted group-hover:border-white/20 group-hover:text-white"
               }`}
             >
               <ChevronDown className="h-4 w-4" />
@@ -143,7 +157,7 @@ export default function MemberAccordion({
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {group.members.map((member) => (
                 <MemberCard
-                  key={`${member.id}-${sessionKey}`}
+                  key={`${member.id || member.name}-${sessionKey}`}
                   member={member}
                 />
               ))}

@@ -29,9 +29,11 @@ export default function MemberCard({ member }:
     <div
       role="button"
       tabIndex={0}
-      aria-label={`${member.name}, ${member.role}. ${isFlipped
+      aria-label={`${member.name}${member.role ? `, ${member.role}` : ""}. ${isFlipped
         ? "Viewing back. Click to flip to front."
-        : "Viewing front. Click to view skills and links."
+        : member.skills && member.skills.length > 0
+          ? "Viewing front. Click to view skills and links."
+          : "Viewing front. Click to view links."
         }`}
       onClick={toggleFlip}
       onKeyDown={handleKeyDown}
@@ -76,9 +78,11 @@ export default function MemberCard({ member }:
             <h3 className="text-xl font-medium tracking-tight text-ces-text-primary">
               {member.name}
             </h3>
-            <p className="mt-1 text-sm text-ces-text-muted">
-              {member.role}
-            </p>
+            {member.role && (
+              <p className="mt-1 text-sm text-ces-text-muted">
+                {member.role}
+              </p>
+            )}
           </div>
 
           {/* Flip Indicator */}
@@ -100,33 +104,35 @@ export default function MemberCard({ member }:
             <h3 className="text-lg font-medium text-ces-text-primary">
               {member.name}
             </h3>
-            <p className="text-xs text-ces-text-muted">{member.role}</p>
+            {member.role && <p className="text-xs text-ces-text-muted">{member.role}</p>}
           </div>
 
           {/* Body: Skills & Links */}
           <div className="my-auto flex flex-col gap-4 py-2">
             {/* Skills */}
-            <div>
-              <span className="block font-mono text-[11px] font-semibold uppercase tracking-wider text-ces-gold">
-                Skills
-              </span>
-              <div className="mt-2 flex flex-wrap gap-1.5">
-                {member.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="rounded-md border border-white/10 bg-white/[0.05] px-2.5 py-0.5 font-mono text-xs text-ces-text-secondary"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Links */}
-            {(member.github || member.linkedin) && (
+            {member.skills && member.skills.length > 0 && (
               <div>
                 <span className="block font-mono text-[11px] font-semibold uppercase tracking-wider text-ces-gold">
-                  Links
+                  Skills
+                </span>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {member.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-md border border-white/10 bg-white/[0.05] px-2.5 py-0.5 font-mono text-xs text-ces-text-secondary"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Links */}
+            {(member.github || (member.linkedin && member.linkedin.trim() !== "")) && (
+              <div>
+                <span className="block font-mono text-[11px] font-semibold uppercase tracking-wider text-ces-gold">
+                  {member.skills && member.skills.length > 0 ? "Links" : "Connect"}
                 </span>
                 <div className="mt-2 flex items-center gap-2">
                   {member.github && (
@@ -144,22 +150,34 @@ export default function MemberCard({ member }:
                       <ArrowUpRight className="h-3 w-3 opacity-60" />
                     </a>
                   )}
-                  {member.linkedin && (
+                  {member.linkedin && member.linkedin.trim() !== "" && (
                     <a
                       href={member.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
                       onKeyDown={(e) => e.stopPropagation()}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-ces-text-secondary transition-colors hover:border-ces-gold/40 hover:bg-white/[0.08] hover:text-white focus:outline-none focus:ring-2 focus:ring-ces-gold/50"
+                      className="inline-flex items-center gap-2 rounded-lg border border-[#0077b5]/40 bg-[#0077b5]/15 px-3.5 py-1.5 text-xs text-white transition-all hover:border-[#0077b5] hover:bg-[#0077b5]/25 hover:shadow-[0_0_12px_rgba(0,119,181,0.3)] focus:outline-none focus:ring-2 focus:ring-[#0077b5]/50"
                       aria-label={`${member.name}'s LinkedIn profile`}
                     >
-                      <FaLinkedin className="h-3.5 w-3.5 text-[#0077b5]" />
+                      <FaLinkedin className="h-4 w-4 text-[#0077b5]" />
                       <span className="font-mono">LinkedIn</span>
-                      <ArrowUpRight className="h-3 w-3 opacity-60" />
+                      <ArrowUpRight className="h-3 w-3 opacity-70" />
                     </a>
                   )}
                 </div>
+              </div>
+            )}
+
+            {/* Fallback if no skills and no active links */}
+            {!member.github && (!member.linkedin || member.linkedin.trim() === "") && (!member.skills || member.skills.length === 0) && (
+              <div className="py-4 text-center">
+                <span className="inline-block rounded-full border border-ces-gold/30 bg-ces-gold/10 px-3.5 py-1 font-mono text-[11px] font-medium text-ces-gold">
+                  {member.role || "Alumni"}
+                </span>
+                <p className="mt-2 text-xs text-ces-text-muted">
+                  Professional links coming soon
+                </p>
               </div>
             )}
           </div>
