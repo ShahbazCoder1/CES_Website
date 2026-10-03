@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -50,7 +49,7 @@ export default function Navbar() {
         /> */}
 
         {/* CES Logo */}
-        <Link
+        <a
           href="/"
           aria-label="Computer Engineers' Society"
           className="relative h-[38px] w-[38px] shrink-0 transition-opacity hover:opacity-80 sm:h-[42px] sm:w-[42px]"
@@ -62,7 +61,7 @@ export default function Navbar() {
             className="object-contain"
             sizes="42px"
           />
-        </Link>
+        </a>
 
         {/* Society Name - Desktop */}
         <div className="hidden shrink-0 whitespace-nowrap text-[15px] font-semibold tracking-wide text-[#f5f7ff] md:block lg:text-[16px]">

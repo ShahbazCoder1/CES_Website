@@ -1,7 +1,6 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import Link from "next/link";
 import { mouseGlow, glowOverlay } from "../mouseGlow";
 
 const upcomingEvents = [
@@ -1062,7 +1061,7 @@ export default function Upcoming() {
               "
             >
 
-              <Link
+              <a
                 href="/events"
                 className="
                   group
@@ -1096,7 +1095,7 @@ export default function Upcoming() {
                   →
                 </span>
 
-              </Link>
+              </a>
 
             </div>
 
