@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Hero() {
   return (
     <section
@@ -86,7 +88,9 @@ export default function Hero() {
               focus:outline-none
             "
           >
-            Join our community
+            <Link href="/links" className="w-full h-full flex items-center justify-center">
+              Join our community
+            </Link>
           </button>
         </div>
 
