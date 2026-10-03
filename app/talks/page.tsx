@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { gradTalks } from "@/components/talks/data";
 import YouTubeEmbed from "@/components/talks/YouTubeEmbed";
 

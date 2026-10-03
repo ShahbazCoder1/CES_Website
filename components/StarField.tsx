@@ -35,12 +35,8 @@ export default function StarField() {
       });
     };
 
-    const frame = requestAnimationFrame(() => {
-      setStarsTop(field(70, false));
-      setStarsBottom(field(90, true));
-    });
-
-    return () => cancelAnimationFrame(frame);
+    setStarsTop(field(70, false));
+    setStarsBottom(field(90, true));
   }, []);
 
   return (

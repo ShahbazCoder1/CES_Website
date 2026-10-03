@@ -102,7 +102,7 @@ export default function Footer() {
                     href="/" 
                     className="font-serif text-[22px] sm:text-[28px] lg:text-[34px] xl:text-4xl text-[#F0F4F8] tracking-tight hover:text-[#F4B41A] active:scale-[0.98] active:text-[#F4B41A]/80 origin-center sm:origin-left transition-all duration-200 block whitespace-nowrap"
                   >
-                    Computer Engineers&apos; Society.
+                    Computer Engineers' Society.
                   </Link>
                   <p className="text-[10px] font-semibold text-[#F4B41A] uppercase tracking-[0.2em] mt-2.5">
                     Siliguri Institute of Technology
@@ -220,7 +220,7 @@ export default function Footer() {
 
         {/* Bottom Section: Legal & Copyright Bar */}
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-4 text-xs font-medium text-[#5C6D8A] text-center sm:text-left">
-          <p className="tracking-wide leading-relaxed">&copy; {currentYear} Computer Engineers&apos; Society.<br className="sm:hidden" /> All rights reserved.</p>
+          <p className="tracking-wide leading-relaxed">&copy; {currentYear} Computer Engineers' Society.<br className="sm:hidden" /> All rights reserved.</p>
           <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6">
             <Link href="/privacy" className="hover:text-[#F4B41A] active:scale-95 transition-all duration-200">
               Privacy Policy

@@ -29,7 +29,7 @@ export default function LinksPage() {
             <style>{css}</style>
 
             <header className="head">
-                <h1>Computer Engineers&apos; Society</h1>
+                <h1>Computer Engineers' Society</h1>
                 <p>Learn with us. Build with us. Grow with us.</p>
             </header>
 
@@ -52,7 +52,7 @@ export default function LinksPage() {
                 </ul>
             </nav>
 
-            <footer>&copy; {new Date().getFullYear()} Computer Engineers&apos; Society</footer>
+            <footer>© {new Date().getFullYear()} Computer Engineers' Society</footer>
         </main>
     );
 }

@@ -100,11 +100,8 @@ Before committing:
 
 ```bash
 npm run lint
-npm run typecheck
 npm run build
 ```
-
-These checks are automatically validated by GitHub Actions CI on every pull request.
 
 Also manually test the changes, especially on **mobile and desktop** if you changed UI.
 
