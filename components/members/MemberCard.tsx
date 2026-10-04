@@ -8,10 +8,10 @@ import type { Member } from "./members-data";
 
 interface MemberCardProps {
   member: Member;
+  priority?: boolean;
 }
 
-export default function MemberCard({ member }:
-  MemberCardProps) {
+export default function MemberCard({ member, priority = false }: MemberCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const toggleFlip = () => {
@@ -56,6 +56,7 @@ export default function MemberCard({ member }:
                 src={member.photo}
                 alt={member.name}
                 fill
+                priority={priority}
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 style={
                   member.photoPosition

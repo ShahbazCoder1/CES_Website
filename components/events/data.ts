@@ -68,7 +68,7 @@ export const pastEvents: EventItem[] = [
     description:
       "Organised on 26 December 2025, this session guided first-year students into programming through a talk by alumnus Swarnadeep Saha Poddar, combining an engaging session with practical guidance so students could explore, learn, and confidently begin their programming journey.",
     gallery: [],
-    cover: "/events/code-banner.png",
+    cover: "/events/roadmap-2-programming/roadmap-2.png",
   },
   {
     id: "45-days-dsa-2",

@@ -155,10 +155,11 @@ export default function MemberAccordion({
         <div className="min-h-0 overflow-hidden">
           <div className="py-6 sm:py-8">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {group.members.map((member) => (
+              {group.members.map((member, index) => (
                 <MemberCard
                   key={`${member.id || member.name}-${sessionKey}`}
                   member={member}
+                  priority={isOpen && index < 3}
                 />
               ))}
             </div>

@@ -59,6 +59,7 @@ export default function Navbar() {
             src="/ces-logo-main.png"
             alt="CES"
             fill
+            priority
             className="object-contain"
             sizes="42px"
           />

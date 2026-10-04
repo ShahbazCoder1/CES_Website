@@ -33,8 +33,8 @@ export default function AlumniPage() {
 
         {/* Alumni Grid: 3 cards per row without batch divider */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {alumniMembers.map((person) => (
-            <MemberCard key={person.id || person.name} member={person} />
+          {alumniMembers.map((person, index) => (
+            <MemberCard key={person.id || person.name} member={person} priority={index < 3} />
           ))}
         </div>
       </section>
