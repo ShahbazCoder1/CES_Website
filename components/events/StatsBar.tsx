@@ -1,6 +1,6 @@
 "use client";
 
-import { mouseGlow, glowOverlay } from "../mouseGlow";
+import { mouseGlow, glowOverlay } from "@/lib/mouseGlow";
 
 const stats = [
   { value: "25+", label: "Events Conducted" },

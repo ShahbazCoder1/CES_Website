@@ -114,6 +114,14 @@ Contributions to the CES website are welcome.
 
 Please read [`CONTRIBUTING.md`](CONTRIBUTING.md) for the contribution guidelines, development workflow, and pull request process before making a contribution.
 
+## Code of Conduct
+
+All contributors and participants are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Security
+
+To report a security vulnerability, please review our [Security Policy](SECURITY.md).
+
 ## Issues & Suggestions
 
 Found a bug or have an idea for the website?

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { mouseGlow, glowOverlay } from "../mouseGlow";
+import { mouseGlow, glowOverlay } from "@/lib/mouseGlow";
 
 const highlights = [
   {

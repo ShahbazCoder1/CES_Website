@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from "react";
 import Link from "next/link";
-import { mouseGlow, glowOverlay } from "../mouseGlow";
+import { mouseGlow, glowOverlay } from "@/lib/mouseGlow";
 
 const upcomingEvents = [
   {

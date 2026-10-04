@@ -249,3 +249,10 @@ PR       → submit your work
 ```
 
 **Keep PRs focused, test your changes, and always show visual work.**
+
+---
+
+## Community Standards and Security
+
+- **Code of Conduct**: All participants and contributors must follow our [Code of Conduct](CODE_OF_CONDUCT.md). Please ensure discussions and code reviews are respectful, welcoming, and constructive.
+- **Security Policy**: If you identify a security vulnerability, do not open a public issue. Follow the private reporting instructions in our [Security Policy](SECURITY.md).

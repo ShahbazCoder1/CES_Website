@@ -1,5 +1,5 @@
 import Image from "next/image";
-import PhotoLinkCard from "@/components/PhotoLinkCard";
+import PhotoLinkCard from "./PhotoLinkCard";
 
 const galleryItems = [
   {
