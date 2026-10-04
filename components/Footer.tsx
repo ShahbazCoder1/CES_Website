@@ -53,14 +53,14 @@ export default function Footer() {
   ];
 
   const socialLinks = [
-    { label: "GitHub", href: "https://github.com", icon: GithubIcon },
-    { label: "Instagram", href: "https://instagram.com", icon: InstagramIcon },
-    { label: "YouTube", href: "https://youtube.com", icon: YoutubeIcon },
+    { label: "GitHub", href: "https://github.com/sitcesclub", icon: GithubIcon },
+    { label: "Instagram", href: "https://instagram.com/sitcesclub", icon: InstagramIcon },
+    { label: "YouTube", href: "https://www.youtube.com/@cesclubsit", icon: YoutubeIcon },
   ];
 
   const resourceLinks = [
     { label: "Society Magazine", href: "#", icon: BookOpen },
-    { label: "Annual Brochure", href: "#", icon: FileText },
+    // { label: "Annual Brochure", href: "#", icon: FileText },
     { label: "Open Source Repos", href: "https://github.com", icon: Terminal },
   ];
 
