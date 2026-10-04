@@ -1,7 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
 interface Star {
   left: number;
   top: number;
@@ -9,35 +5,37 @@ interface Star {
   opacity: number;
 }
 
-export default function StarField() {
-  const [starsTop, setStarsTop] = useState<Star[]>([]);
-  const [starsBottom, setStarsBottom] = useState<Star[]>([]);
+const generateField = (
+  count: number,
+  brighten: boolean,
+  seed: number
+): Star[] => {
+  return Array.from({ length: count }, (_, i) => {
+    const n1 = Math.abs(Math.sin(seed + i * 12.9898)) * 10000;
+    const x = Number(((n1 - Math.floor(n1)) * 100).toFixed(2));
 
-  useEffect(() => {
-    const field = (
-      count: number,
-      brighten: boolean
-    ): Star[] => {
-      return Array.from({ length: count }, () => {
-        const x = Math.random() * 100;
-        const y = Math.random() * 100;
-        const s = Math.random() * 1.5 + 0.4;
-        const o =
-          (Math.random() * 0.5 + 0.15) *
-          (brighten ? 1.3 : 1);
+    const n2 = Math.abs(Math.sin(seed + i * 78.233)) * 10000;
+    const y = Number(((n2 - Math.floor(n2)) * 100).toFixed(2));
 
-        return {
-          left: x,
-          top: y,
-          size: s,
-          opacity: o,
-        };
-      });
+    const n3 = Math.abs(Math.sin(seed + i * 45.164)) * 10000;
+    const s = Number((((n3 - Math.floor(n3)) * 1.5) + 0.4).toFixed(2));
+
+    const n4 = Math.abs(Math.sin(seed + i * 93.371)) * 10000;
+    const o = Number((((n4 - Math.floor(n4)) * 0.5 + 0.15) * (brighten ? 1.3 : 1)).toFixed(2));
+
+    return {
+      left: x,
+      top: y,
+      size: s,
+      opacity: o,
     };
+  });
+};
 
-    setStarsTop(field(70, false));
-    setStarsBottom(field(90, true));
-  }, []);
+const starsTop = generateField(70, false, 1);
+const starsBottom = generateField(90, true, 2);
+
+export default function StarField() {
 
   return (
     <>

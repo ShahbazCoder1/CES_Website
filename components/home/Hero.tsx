@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
@@ -108,9 +109,12 @@ export default function Hero() {
           "
         >
           {/* CES Mascot */}
-          <img
+          <Image
             src="/mascot.png"
             alt="CES mascot"
+            width={600}
+            height={600}
+            priority
             className="
               h-[155%]
               w-[155%]

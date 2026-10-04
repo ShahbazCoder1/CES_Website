@@ -30,6 +30,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${newsreader.variable} ${geistMono.variable} font-serif scroll-smooth`}
     >
       <body className="font-serif min-h-screen overflow-x-hidden bg-[#050408] text-[#f2f0fb] antialiased">
