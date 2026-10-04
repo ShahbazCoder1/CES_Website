@@ -126,9 +126,11 @@ public/
 └── fonts/
 ```
 
-### Image rules
+### Image and Asset Rules
 
-- Use lowercase `kebab-case`.
+- Use lowercase `kebab-case` for all asset file names and directory names.
+- Ensure consistent directory casing across the repository (for example, `public/members/`, `public/events/`, `public/alumni/`).
+- Never use uppercase, PascalCase, camelCase, or mixed-case directory or asset names.
 - Use descriptive names.
 - Optimize images before committing them.
 - Do not commit unnecessary camera originals or multi-MB images.
@@ -142,6 +144,8 @@ Good:
 code-for-communities-2026.webp
 mriganka-roy.webp
 ces-mascot.webp
+public/members/amol-kumar.png
+public/alumni/arpan-dey.png
 ```
 
 Bad:
@@ -151,6 +155,8 @@ IMG_4920.jpg
 new.png
 final-final.png
 latest2.jpg
+public/Members/Amol-Kumar.png
+public/alumni/ArpanDey.png
 ```
 
 Never use `final`, `new`, `old`, `latest`, etc. for versioning. Git handles versions.
