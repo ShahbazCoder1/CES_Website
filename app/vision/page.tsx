@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import AboutSection from "@/components/vision/AboutSection";
+import JourneySection from "@/components/vision/JourneySection";
 import LeadershipMessages from "@/components/vision/LeadershipMessages";
 import VisionIntro from "@/components/vision/VisionIntro";
 
@@ -12,7 +14,9 @@ export default function Page() {
   return (
     <div className="w-full pt-24 sm:pt-28 min-h-screen">
       <VisionIntro />
+      <AboutSection />
       <LeadershipMessages />
+      <JourneySection />
     </div>
   );
 }
