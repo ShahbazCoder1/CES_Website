@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import EventCard from "./EventCard";
-import { mouseGlow, glowOverlay } from "../mouseGlow";
+import { mouseGlow, glowOverlay } from "@/lib/mouseGlow";
 import type { EventItem } from "./data";
 
 function SectionHeader({

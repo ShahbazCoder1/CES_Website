@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { mouseGlow, glowOverlay } from "@/components/mouseGlow";
+import { mouseGlow, glowOverlay } from "@/lib/mouseGlow";
 
 const achievements = [
   {

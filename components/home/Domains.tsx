@@ -9,7 +9,7 @@ import {
   GitBranch,
   Terminal,
 } from "lucide-react";
-import { mouseGlow, glowOverlay } from "../mouseGlow";
+import { mouseGlow, glowOverlay } from "@/lib/mouseGlow";
 
 const domains = [
   {
