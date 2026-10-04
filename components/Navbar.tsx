@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -49,7 +50,7 @@ export default function Navbar() {
         /> */}
 
         {/* CES Logo */}
-        <a
+        <Link
           href="/"
           aria-label="Computer Engineers' Society"
           className="relative h-[38px] w-[38px] shrink-0 transition-opacity hover:opacity-80 sm:h-[42px] sm:w-[42px]"
@@ -61,7 +62,7 @@ export default function Navbar() {
             className="object-contain"
             sizes="42px"
           />
-        </a>
+        </Link>
 
         {/* Society Name - Desktop */}
         <div className="hidden shrink-0 whitespace-nowrap text-[15px] font-semibold tracking-wide text-[#f5f7ff] md:block lg:text-[16px]">
@@ -79,28 +80,28 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-6 pr-2 lg:flex xl:gap-9">
           {links.map((link) => (
-            <a
+            <Link
               key={link}
               href={linkHref(link)}
               style={{ fontFamily: "'Open Sans', sans-serif" }}
               className="whitespace-nowrap text-[14px] font-medium tracking-normal text-[#d1d7e9] transition-colors hover:text-[#ffffff]"
             >
               {link}
-            </a>
+            </Link>
           ))}
         </div>
 
         {/* Tablet Navigation */}
         <div className="hidden items-center gap-5 pr-1 md:flex lg:hidden">
           {links.slice(0, 4).map((link) => (
-            <a
+            <Link
               key={link}
               href={linkHref(link)}
               style={{ fontFamily: "'Open Sans', sans-serif" }}
               className="whitespace-nowrap text-[13px] font-medium tracking-normal text-[#d1d7e9] transition-colors hover:text-[#ffffff]"
             >
               {link}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -136,7 +137,7 @@ export default function Navbar() {
       {menuOpen && (
         <div className="mt-2 overflow-hidden rounded-2xl border border-[rgba(89,97,128,0.3)] bg-[rgba(20,27,74,0.96)] p-2 shadow-xl backdrop-blur-md md:hidden">
           {links.map((link) => (
-            <a
+            <Link
               key={link}
               href={linkHref(link)}
               onClick={() => setMenuOpen(false)}
@@ -144,7 +145,7 @@ export default function Navbar() {
               className="block rounded-xl px-4 py-3 text-[14px] font-medium tracking-normal text-[#d1d7e9] transition-colors hover:bg-white/[0.06] hover:text-[#ffffff]"
             >
               {link}
-            </a>
+            </Link>
           ))}
         </div>
       )}
