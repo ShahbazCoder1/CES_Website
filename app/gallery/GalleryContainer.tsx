@@ -8,18 +8,19 @@ import {
 } from "./galleryData";
 import GalleryHero from "./GalleryHero";
 import BookshelfStage from "./BookshelfStage";
-import BookPreviewModal from "./BookPreviewModal";
-import OpenBookSpread from "./OpenBookSpread";
+import CategoryPhotoGallery, {
+  type CategoryPhotoItem,
+} from "./CategoryPhotoGallery";
 import PhotoLightboxModal from "./PhotoLightboxModal";
 
-type ViewMode = "shelf" | "preview" | "open";
+type ViewMode = "shelf" | "gallery";
 
 interface ActiveLightboxState {
   photo: GalleryPhoto;
   eventTitle: string;
   index: number;
   total: number;
-  allPhotos: GalleryPhoto[];
+  activeItems: CategoryPhotoItem[];
 }
 
 export default function GalleryContainer() {
@@ -27,81 +28,71 @@ export default function GalleryContainer() {
   const [selectedCategory, setSelectedCategory] = useState<BookCategory | null>(
     null
   );
-  const [currentEventIndex, setCurrentEventIndex] = useState<number>(0);
   const [activeLightbox, setActiveLightbox] =
     useState<ActiveLightboxState | null>(null);
 
-  // User selects a book from the shelf -> show preview modal
+  // User selects a book from the shelf -> open photo gallery directly
   const handleSelectCategory = (category: BookCategory) => {
     setSelectedCategory(category);
-    setViewMode("preview");
+    setViewMode("gallery");
   };
 
-  // User clicks "Open Book →" in the preview modal
-  const handleOpenBook = (category: BookCategory) => {
+  // Switch category directly inside the photo gallery
+  const handleSwitchCategory = (category: BookCategory) => {
     setSelectedCategory(category);
-    // Open to the first page spread by default (index 0)
-    setCurrentEventIndex(0);
-    setViewMode("open");
   };
 
-  // Switch category directly inside the open album
-  const handleSwitchCategoryInSpread = (category: BookCategory) => {
-    setSelectedCategory(category);
-    setCurrentEventIndex(0);
-  };
-
-  // Return to gallery shelf
+  // Return to 4-book bookshelf stage
   const handleReturnToGallery = () => {
     setViewMode("shelf");
     setSelectedCategory(null);
     setActiveLightbox(null);
   };
 
-  // Open photo in lightbox
+  // Open photo in full-screen lightbox
   const handlePhotoClick = (
     photo: GalleryPhoto,
     index: number,
-    eventTitle: string
+    eventTitle: string,
+    activeItems: CategoryPhotoItem[]
   ) => {
-    const currentEvent = currentCategory.events[currentEventIndex];
-    const allPhotos = currentEvent?.photos || [photo];
-
     setActiveLightbox({
       photo,
       eventTitle,
       index,
-      total: allPhotos.length,
-      allPhotos,
+      total: activeItems.length,
+      activeItems,
     });
   };
 
-  // Lightbox previous
+  // Lightbox navigate previous
   const handleLightboxPrev = () => {
     if (!activeLightbox) return;
     const nextIndex =
       (activeLightbox.index - 1 + activeLightbox.total) %
       activeLightbox.total;
-    const nextPhoto = activeLightbox.allPhotos[nextIndex];
-    if (nextPhoto) {
+    const nextItem = activeLightbox.activeItems[nextIndex];
+    if (nextItem) {
       setActiveLightbox({
         ...activeLightbox,
         index: nextIndex,
-        photo: nextPhoto,
+        photo: nextItem.photo,
+        eventTitle: nextItem.eventTitle,
       });
     }
   };
 
-  // Lightbox next
+  // Lightbox navigate next
   const handleLightboxNext = () => {
     if (!activeLightbox) return;
     const nextIndex = (activeLightbox.index + 1) % activeLightbox.total;
-    const nextPhoto = activeLightbox.allPhotos[nextIndex];
-    if (nextPhoto) {
+    const nextItem = activeLightbox.activeItems[nextIndex];
+    if (nextItem) {
       setActiveLightbox({
         ...activeLightbox,
         index: nextIndex,
-        photo: nextPhoto,
+        photo: nextItem.photo,
+        eventTitle: nextItem.eventTitle,
       });
     }
   };
@@ -111,7 +102,7 @@ export default function GalleryContainer() {
   return (
     <div className="relative min-h-[calc(100vh-5rem)] w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-16">
       {/* Bookshelf State */}
-      {viewMode !== "open" && (
+      {viewMode === "shelf" && (
         <div className="flex flex-col gap-6 sm:gap-10 animate-fadeIn">
           <GalleryHero totalBooks={galleryCategories.length} />
 
@@ -123,28 +114,15 @@ export default function GalleryContainer() {
         </div>
       )}
 
-      {/* Book Preview Modal */}
-      {viewMode === "preview" && selectedCategory && (
-        <BookPreviewModal
-          category={selectedCategory}
-          onOpenBook={handleOpenBook}
-          onDismiss={handleReturnToGallery}
+      {/* Modern VSCO-Style Photo Gallery View */}
+      {viewMode === "gallery" && currentCategory && (
+        <CategoryPhotoGallery
+          category={currentCategory}
+          allCategories={galleryCategories}
+          onReturnToGallery={handleReturnToGallery}
+          onSelectCategory={handleSwitchCategory}
+          onPhotoClick={handlePhotoClick}
         />
-      )}
-
-      {/* Open Book View */}
-      {viewMode === "open" && currentCategory && (
-        <div className="animate-fadeIn">
-          <OpenBookSpread
-            category={currentCategory}
-            allCategories={galleryCategories}
-            currentEventIndex={currentEventIndex}
-            onEventChange={setCurrentEventIndex}
-            onSelectCategory={handleSwitchCategoryInSpread}
-            onReturnToGallery={handleReturnToGallery}
-            onPhotoClick={handlePhotoClick}
-          />
-        </div>
       )}
 
       {/* High-Resolution Photo Lightbox */}
@@ -162,3 +140,4 @@ export default function GalleryContainer() {
     </div>
   );
 }
+
