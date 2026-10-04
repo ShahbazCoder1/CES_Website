@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   Trophy,
   ShieldCheck,
@@ -62,15 +62,29 @@ const domains = [
   },
 ];
 
+const subscribeReducedMotion = (callback: () => void) => {
+  const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mediaQuery.addEventListener("change", callback);
+  return () => mediaQuery.removeEventListener("change", callback);
+};
+
+const getReducedMotionSnapshot = () => {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+};
+
+const getReducedMotionServerSnapshot = () => false;
+
 export default function Domains() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot
+  );
 
   useEffect(() => {
-    // Respect prefers-reduced-motion
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches) {
-      setIsVisible(true);
+    if (prefersReducedMotion) {
       return;
     }
 
@@ -93,7 +107,9 @@ export default function Domains() {
         observer.unobserve(currentRef);
       }
     };
-  }, []);
+  }, [prefersReducedMotion]);
+
+  const activeVisible = prefersReducedMotion || isVisible;
 
   return (
     <section
@@ -114,7 +130,7 @@ export default function Domains() {
           className={`
             mb-10 sm:mb-14
             transition-all duration-700 ease-out
-            ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
+            ${activeVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
           `}
         >
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
@@ -147,7 +163,7 @@ export default function Domains() {
                 key={domain.id}
                 onMouseMove={mouseGlow}
                 style={{
-                  transitionDelay: isVisible ? `${index * 70}ms` : "0ms",
+                  transitionDelay: activeVisible ? `${index * 70}ms` : "0ms",
                 }}
                 className={`
                   group
@@ -166,7 +182,7 @@ export default function Domains() {
                   cursor-pointer
                   shadow-lg shadow-black/20
                   ${
-                    isVisible
+                    activeVisible
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-4"
                   }
